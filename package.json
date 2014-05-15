@@ -1,0 +1,27 @@
+{
+    "name": "HelloOpenFin",
+    "version": "0.0.1",
+    "description": "OpenFin Hello world",
+    "main": "server.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/openfin/HelloOpenFin.git"
+    },
+    "author": "",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/openfin/HelloOpenFin/issues"
+    },
+    "homepage": "https://github.com/openfin/HelloOpenFin",
+    "dependencies": {
+        "express": "^4.2.0",
+        "grunt": "^0.4",
+        "grunt-cli": "^0.1",
+        "grunt-contrib-jshint": "^0.10",
+        "grunt-contrib-watch": "^0.6",
+        "grunt-jsbeautifier": "^0.2.7"
+    }
+}
