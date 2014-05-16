@@ -3,7 +3,7 @@
 module.exports = function(grunt) {
     var files = [
         'gruntfile.js',
-        'public/*.js',
+        'public/**/*.js',
         'package.json',
         'server.js'
     ];

@@ -91,14 +91,17 @@ textarea {
    Author's custom styles
    ========================================================================== */
 body {
-  /*font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;*/
-/*  width: 960px;
-  height: 500px;*/
-  /*position: relative;*/
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  text-align: center;
+  background-color: #2d2e29;
 }
 
-.companyHeader {
+.company-header {
     margin-bottom: -10px;
+    color:#fb9e25;
+}
+.company-description {
+    color:#5972a7;
 }
 
 path.slice{
@@ -112,7 +115,37 @@ polyline{
     fill: none;
 }
 
+.chart-container {
+    max-height: 400px;
+}
 
+.btn {
+  padding: 5px;
+  font-size: 13px;
+  color: #c6c8c8;
+  text-shadow: 0 -1px rgba(0,0,0,0.69);
+  background-color: #595b5b;
+  box-shadow: inset 0 1px #737373;
+  border: 1px solid #333434;
+  border-radius: 4px;
+  margin-right: 0px;
+}
+.btn:hover {
+ background-color: #626465;
+ /*not sure why this is not working*/
+ transform: scale(3);
+ -webkit-transform: scale(3);
+}
+.btn:active {
+  border: 1px solid #333434;
+  background-color: #3f4041;
+  box-shadow: inset 0 1px rgba(0,0,0,0.05);
+}
+.btn:focus {
+  border: 1px solid #0036ff;
+  box-shadow: inset 0 1px rgba(255,255,255,0.36), 0 0 0 2px #6fb5f1;
+  outline: 0;
+}
 
 
 

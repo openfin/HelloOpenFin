@@ -7,17 +7,22 @@
         <link rel="stylesheet" href="css/main.css">
     </head>
     <body>
-        <h1 class="companyHeader">
-            CMPN
-        </h1>
-        <span>
-            (company)
-        </span>
-        <div>
-            <p>Hey there fella</p>
+        <div class="top-description">
+            <h1 class="company-header">
+                CMPN
+            </h1>
+            <span class="company-description">
+                (company)
+            </span>
         </div>
-        <div id="chart">
-            <button class="randomize">randomize</button>
+        <div class="chart-container">
+            <div id="chart">
+            </div>
+        </div>
+        <div class="menu-buttons">
+            <a class="btn" id="new-window">New Window</a>
+            <a class="btn" id="desktop-notification">Desktop notification</a>
+            <a class="btn" id="cpu-info">Cpu info</a>
         </div>
         <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
         <script src="js/main.js"></script>
