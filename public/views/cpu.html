@@ -9,6 +9,11 @@
             html, body {
                 background-color : whitesmoke;
             }
+            .axis path, .axis line {
+              fill: none;
+              stroke: #000;
+              shape-rendering: crispEdges;
+            }
         </style>
     </head>
     <body>
@@ -149,7 +154,7 @@
                 .y(function(d) { return d.value; });
 
             var nest = d3.nest()
-                .key(function(d) { console.log('this is what ill return NEST!!', d); return d.key; });
+                .key(function(d) { return d.key; });
 
             var area = d3.svg.area()
                 .interpolate("cardinal")
@@ -171,31 +176,26 @@
                 console.log('in from the fxn', data);
 
                 d3.selectAll('.axis').remove();
+                svg.selectAll(".layer").remove();
 
                 var xAxis = d3.svg.axis()
                 .scale(x)
                 .orient("bottom")
                 .ticks(d3.time.seconds);
 
-
-                //d3.json("../sim_data/jdata.json", function(err, data) {
-
-                   //console.log('this is my data', data.splice(0));
-
                   data.forEach(function(d) {
-                    console.log('I got your date right here ... ', d);
+
+                    //we are already passing a date obj (thats what it wants)
                     //d.date = format.parse(d.date);
+
                     d.value = +d.value;
                   });
 
 
-                   console.log('this is my nest ', nest.entries(data));
-
                   var layers = stack(nest.entries(data));
 
 
-                  console.log('these are my layers', layers);
-                  //return;
+                  //console.log('these are my layers', layers);
 
                   x.domain(d3.extent(data, function(d) { return d.date; }));
                   y.domain([0, d3.max(data, function(d) { return d.y0 + d.y; })]);
@@ -215,7 +215,7 @@
                   svg.append("g")
                       .attr("class", "y axis")
                       .call(yAxis);
-                //});
+
 
 
 
@@ -247,22 +247,11 @@
                     function reloadProcInfo(){
                         fin.desktop.System.getProcessList(function(arrList){
 
+                            console.log('this is from the procList return', arrList);
 
                             var date = new Date();
 
-                            var dateHHMMSS = date.toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1");
-
                             var timeKey = date.getTime();
-
-
-
-                            var month = date.getUTCMonth();
-                            var day = date.getUTCDate();
-                            var year = date.getUTCFullYear();
-
-                            var dateString =  month + "/" + day  + "/" +  year;
-
-                            //console.log('this is the date string', dateString);
 
                             var currentProcesses = {};
                             currentProcesses[timeKey] = {};
@@ -274,23 +263,15 @@
                                 item.key = item.name;
                                 //item.key = timeKey;
                                 item.value = item.cpuUsage;
-                                item.value = 40;
+                                //item.value = Math.random() * 1000 ;
 
-
-
-                                console.log('this is the date string', timeKey, typeof timeKey);
-
-                                //item['date'] = String(dateHHMMSS);
                                 item.date = new Date(timeKey);
-                                //console.log('this is the item ', item)
-                                //var name = item.name;
 
-                                console.log('ill add this item', item);
-
-                                currentProcesses[timeKey][name] = item;
+                                currentProcesses[timeKey][item.name] = item;
 
                             });
 
+                            console.log('these are the current procs', currentProcesses);
                             procList.addToFront(currentProcesses);
 
 
@@ -307,14 +288,14 @@
 
                     function procListToD3Array(procList) {
 
-                        console.log('this is the inbound list', procList);
+                       // console.log('this is the inbound list', procList);
                         var returnArr = [],
                             listLength = procList.length;
 
                         while (listLength--){
                             var procSet = procList[listLength];
                             for (var proc in procSet){
-                                console.log('this is one process', proc, procSet[proc]);
+                                //console.log('this is one process', proc, procSet[proc]);
                                 for (indiProc in procSet[proc] ) {
                                     returnArr.unshift( procSet[proc][indiProc]);
                                 }
