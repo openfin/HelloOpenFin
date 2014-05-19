@@ -1,3 +1,5 @@
+//Based on the Pi Chart example from dbuezas
+//Original https://gist.github.com/dbuezas/9306799
 (function() {
     'use strict';
     var svg = d3.select("#chart")
@@ -6,10 +8,6 @@
 
     svg.append("g")
         .attr("class", "slices");
-    // svg.append("g")
-    //     .attr("class", "labels");
-    // svg.append("g")
-    //     .attr("class", "lines");
 
     var width = 380,
         height = 350,
@@ -36,7 +34,7 @@
     };
 
     var color = d3.scale.ordinal()
-        .domain(["Lorem ipsum", "dolor sit", "amet", "consectetur", "adipisicing", "elit", "sed", "do", "eiusmod", "tempor", "incididunt"])
+        .domain(["clear blue", "clear blue 2", "clear purple", "dark purple", "skin", "orange", "bright orange", "a", "b", "c", "d"])
         .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 
     function randomData() {
@@ -48,13 +46,6 @@
             };
         });
     }
-
-    change(randomData());
-
-    d3.select(".randomize")
-        .on("click", function() {
-            change(randomData());
-        });
 
     var randomLoop = function() {
         change(randomData());
@@ -88,71 +79,6 @@
             });
 
         slice.exit()
-            .remove();
-
-        /* ------- TEXT LABELS -------*/
-
-        var text = svg.select(".labels").selectAll("text")
-            .data(pie(data), key);
-
-        text.enter()
-            .append("text")
-            .attr("dy", ".35em")
-            .text(function(d) {
-                return d.data.label;
-            });
-
-        function midAngle(d) {
-            return d.startAngle + (d.endAngle - d.startAngle) / 2;
-        }
-
-        text.transition().duration(1000)
-            .attrTween("transform", function(d) {
-                this._current = this._current || d;
-                var interpolate = d3.interpolate(this._current, d);
-                this._current = interpolate(0);
-                return function(t) {
-                    var d2 = interpolate(t);
-                    var pos = outerArc.centroid(d2);
-                    pos[0] = radius * (midAngle(d2) < Math.PI ? 1 : -1);
-                    return "translate(" + pos + ")";
-                };
-            })
-            .styleTween("text-anchor", function(d) {
-                this._current = this._current || d;
-                var interpolate = d3.interpolate(this._current, d);
-                this._current = interpolate(0);
-                return function(t) {
-                    var d2 = interpolate(t);
-                    return midAngle(d2) < Math.PI ? "start" : "end";
-                };
-            });
-
-        text.exit()
-            .remove();
-
-        /* ------- SLICE TO TEXT POLYLINES -------*/
-
-        var polyline = svg.select(".lines").selectAll("polyline")
-            .data(pie(data), key);
-
-        polyline.enter()
-            .append("polyline");
-
-        polyline.transition().duration(1000)
-            .attrTween("points", function(d) {
-                this._current = this._current || d;
-                var interpolate = d3.interpolate(this._current, d);
-                this._current = interpolate(0);
-                return function(t) {
-                    var d2 = interpolate(t);
-                    var pos = outerArc.centroid(d2);
-                    pos[0] = radius * 0.95 * (midAngle(d2) < Math.PI ? 1 : -1);
-                    return [arc.centroid(d2), outerArc.centroid(d2), pos];
-                };
-            });
-
-        polyline.exit()
             .remove();
     }
 }());

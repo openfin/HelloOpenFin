@@ -1,21 +1,60 @@
 (function() {
+    'use strict';
     document.addEventListener('DOMContentLoaded', function() {
 
-        var newWindowButton = document.querySelectorAll('#new-window')[0],
-            desktopNotificationButton = document.querySelectorAll('#desktop-notification')[0],
-            cpuInfoButton = document.querySelectorAll('#cpu-info')[0];
+        //get the
+        var desktopNotificationButton = document.querySelectorAll('#desktop-notification')[0],
+            cpuInfoButton = document.querySelectorAll('#cpu-info')[0],
+            closeButton = document.querySelectorAll('#close-app')[0],
+            ofDraggable = document.querySelectorAll('.of-draggable')[0];
 
-        console.log('Hello world');
+        //OpenFin is ready.
+        fin.desktop.main(function() {
 
-        //set the event listeners.
-        newWindowButton.addEventListener('click', function() {
-            console.log('new window click');
-        });
-        desktopNotificationButton.addEventListener('click', function() {
-            console.log('desktop notification click');
-        });
-        cpuInfoButton.addEventListener('click', function() {
-            console.log('cpu info click');
+            //the OpenFin main window.
+            var mainWindow = fin.desktop.Window.getCurrent();
+
+            //show the main window now that we are ready.
+            mainWindow.show();
+
+            //Close button event handler
+            closeButton.addEventListener('click', function() {
+                mainWindow.close();
+            });
+
+            //Desktop notification event handler
+            desktopNotificationButton.addEventListener('click', function() {
+                var notification = new fin.desktop.Notification({
+                    url: '/views/notification.html',
+                    message: 'Notification from app'
+                });
+            });
+
+            //Cpu information button.
+            cpuInfoButton.addEventListener('click', function() {
+                fin.desktop.System.showDeveloperTools();
+                alert('dev tools?');
+            });
+
+            //set up window move.
+            utils.registerDragHandler(ofDraggable, {
+                //once movement starts make the window transparent.
+                onDragStart: function(x, y) {
+                    mainWindow.updateOptions({
+                        opacity: 0.5
+                    });
+                },
+                //move the window with the mouse
+                onDrag: function(X, Y) {
+                    window.moveTo(X, Y);
+                },
+                //window can now stop being transparent.
+                onDragEnd: function() {
+                    mainWindow.updateOptions({
+                        opacity: 1
+                    });
+                }
+            });
         });
     });
 }());

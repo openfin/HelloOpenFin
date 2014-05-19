@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Buttons</title>
+        <meta name="description" content="OpenFin Hello World">
+        <link rel="stylesheet" href="/css/main.css">
+    </head>
+    <body>
+        <div class="notification-body">
+            <h3 id="notification-text"></h3>
+            <span id="time-text"></span>
+        </div>
+        <script type="text/javascript">
+            // messages received from the application creating the application
+            function onNotificationMessage(message) {
+                var date = new Date();
+                document.querySelectorAll('#notification-text')[0].innerHTML = message;
+                document.querySelectorAll('#time-text')[0].innerHTML = new Date().toLocaleString();
+            };
+        </script>
+        <script src="https://developer.openfin.co/release/adapter/js/openfin-desktop-js-adapter.js"></script>
+    </body>
+</html>
