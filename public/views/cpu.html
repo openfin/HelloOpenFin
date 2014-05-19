@@ -1,0 +1,257 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <meta name="description" content="OpenFin Hello World">
+        <link rel="stylesheet" href="../css/main.css">
+        <style>
+            html, body {
+                background-color : whitesmoke;
+            }
+        </style>
+    </head>
+    <body>
+        <h1 class="company-header">CPU Usage</h1>
+
+
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+        <!--<script src="../js/main.js"></script>-->
+        <script src="../js/cpu.js"></script>
+
+
+        <script src="../js/charts.js"></script>
+        <script src="https://developer.openfin.co/release/adapter/js/openfin-desktop-js-adapter.js"></script>
+
+
+        <script>
+
+            var format = d3.time.format("%m/%d/%y");
+
+            var margin = {top: 20, right: 30, bottom: 30, left: 40},
+                width = 960 - margin.left - margin.right,
+                height = 500 - margin.top - margin.bottom;
+
+            var x = d3.time.scale()
+                .range([0, width]);
+
+            var y = d3.scale.linear()
+                .range([height, 0]);
+
+            var z = d3.scale.category20c();
+
+            var xAxis = d3.svg.axis()
+                .scale(x)
+                .orient("bottom")
+                .ticks(d3.time.days);
+
+            var yAxis = d3.svg.axis()
+                .scale(y)
+                .orient("left");
+
+            var stack = d3.layout.stack()
+                .offset("zero")
+                .values(function(d) { return d.values; })
+                .x(function(d) { return d.date; })
+                .y(function(d) { return d.value; });
+
+            var nest = d3.nest()
+                .key(function(d) { return d.key; });
+
+            var area = d3.svg.area()
+                .interpolate("cardinal")
+                .x(function(d) { return x(d.date); })
+                .y0(function(d) { return y(d.y0); })
+                .y1(function(d) { return y(d.y0 + d.y); });
+
+            var svg = d3.select("body").append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+              .append("g")
+                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+            d3.json("../sim_data/jdata.json", function(err, data) {
+
+               console.log('this is my data', data.splice(0));
+
+              data.forEach(function(d) {
+                d.date = format.parse(d.date);
+                d.value = +d.value;
+              });
+
+
+               console.log('this is my nest ', nest.entries(data));
+
+              var layers = stack(nest.entries(data));
+
+
+
+
+              console.log('these are my layers', layers);
+              //return;
+
+              x.domain(d3.extent(data, function(d) { return d.date; }));
+              y.domain([0, d3.max(data, function(d) { return d.y0 + d.y; })]);
+
+              svg.selectAll(".layer")
+                  .data(layers)
+                .enter().append("path")
+                  .attr("class", "layer")
+                  .attr("d", function(d) { return area(d.values); })
+                  .style("fill", function(d, i) { return z(i); });
+
+              svg.append("g")
+                  .attr("class", "x axis")
+                  .attr("transform", "translate(0," + height + ")")
+                  .call(xAxis);
+
+              svg.append("g")
+                  .attr("class", "y axis")
+                  .call(yAxis);
+            });
+
+        </script>
+
+
+        <script>
+
+
+            document.addEventListener('DOMContentLoaded', function() {
+                fin.desktop.main(function () {
+
+                    procList = CappedArray(10);
+                    //procList = [];
+                    function getEmptyListItem(name) {
+
+                        return {
+                            name : name,
+                            cupUsage : 0,
+                            processId : -1,
+                            workingSetSize : 0
+                        }
+
+                    }
+
+                    function reloadProcInfo(){
+                        fin.desktop.System.getProcessList(function(arrList){
+
+                            var timeKey = new Date().getTime();
+                            var currentProcesses = {};
+                            currentProcesses[timeKey] = {};
+
+
+                            arrList.forEach(function(item){
+
+                                item.timeKey = timeKey;
+                                //console.log('this is the item ', item)
+                                var name = item.name;
+
+                                currentProcesses[timeKey][name] = item;
+
+                            });
+
+                            procList.addToFront(currentProcesses);
+
+
+                            console.log('this is the full proc log', procListToD3Array(procList.getArray()));
+                        }, function (err){
+                            console.log('this was the err', err);
+                        });
+                    }
+
+
+                    function procListToD3Array(procList) {
+
+                        console.log('this is the inbound list', procList);
+                        var returnArr = [],
+                            listLength = procList.length;
+
+                        while (listLength--){
+                            var procSet = procList[listLength];
+                            for (var proc in procSet){
+                                console.log('this is one process', proc, procSet[proc]);
+                                for (indiProc in procSet[proc] ) {
+                                    returnArr.unshift( procSet[proc][indiProc]);
+                                }
+
+                            }
+                        }
+
+                        return returnArr;
+                    }
+
+
+
+                    manProc = managedRecursive(reloadProcInfo,2000);
+                    manProc.start();
+
+
+                    function CappedArray (max) {
+                        var me = this;
+                        this.arr = [];
+                        this.addToFront = function(item){
+                            if(me.arr.length >= max){
+                                me.arr.pop();
+                            }
+                            me.arr.unshift(item)
+                        }
+                        this.addToBack = function(){
+                            if(me.arr.length >= max){
+                                me.arr.shift();
+                            }
+                            me.arr.push(item);
+                        }
+
+                        return {
+                            addToFront : this.addToFront,
+                            addToBack : addToBack,
+                            getArray : function(){
+                                return me.arr
+                            }
+                        }
+                    }
+
+
+                    function managedRecursive (fun, time){
+
+                        var me = this;
+                        this.run = true;
+
+                        this.start = function  () {
+                            if (me.run) {
+                                setTimeout(function(){
+                                    if (me.run){
+                                        fun.apply(fun, arguments);
+                                        me.start();
+                                    }
+
+                                },time);
+                            }
+                        };
+
+                        this.restart = function(){
+                            me.run = true;
+                            me.start(arguments);
+                        };
+
+                        this.stop = function (){
+                            me.run = false;
+                        };
+
+                        return {
+                            start : this.start,
+                            stop : this.stop,
+                            restart : this.restart
+                        }
+                    }
+
+
+                });
+
+
+            });
+
+        </script>
+    </body>
+</html>
