@@ -15,7 +15,7 @@
         <h1 class="company-header">CPU Usage</h1>
 
 
-        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>d
+        <script src="../bower_components/jquery/dist/jquery.js"></script>
         <!-- <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script> -->
         <script src="../bower_components/d3/d3.min.js"></script>
         <!--<script src="../js/main.js"></script>-->
@@ -23,8 +23,8 @@
 
 
         <script src="../js/charts.js"></script>
-        <!-- <script src="https://developer.openfin.co/release/adapter/js/openfin-desktop-js-adapter.js"></script>-->
-        <script src="http://local:8080/desktop/desktop-adapter/dist/openfin-desktop.js"></script>
+        <script src="https://developer.openfin.co/release/adapter/js/openfin-desktop-js-adapter.js"></script>
+        <!-- <script src="http://local:8080/desktop/desktop-adapter/dist/openfin-desktop.js"></script> -->
 
 
         <script>
@@ -75,11 +75,13 @@
 
             // d3.json("../sim_data/jdata.json", function(err, data) {
 
-            //    console.log('this is my data', data.splice(0));
+            //    //console.log('this is my data', data.splice(0));
 
             //   data.forEach(function(d) {
+            //     console.log('this is the D', d);
             //     d.date = format.parse(d.date);
             //     d.value = +d.value;
+            //     console.log('this is the after D', d);
             //   });
 
 
@@ -115,7 +117,12 @@
 
 
 
-            var format = d3.time.format("%m/%d/%y");
+
+        /** this is mine *******/
+
+            //var format = d3.time.format("%m/%d/%y");
+            //var format = d3.time.format("%c");
+            var format = d3.time.format("%x");
 
             var margin = {top: 20, right: 30, bottom: 30, left: 40},
                 width = 960 - margin.left - margin.right,
@@ -129,10 +136,7 @@
 
             var z = d3.scale.category20c();
 
-            var xAxis = d3.svg.axis()
-                .scale(x)
-                .orient("bottom")
-                .ticks(d3.time.days);
+
 
             var yAxis = d3.svg.axis()
                 .scale(y)
@@ -145,7 +149,7 @@
                 .y(function(d) { return d.value; });
 
             var nest = d3.nest()
-                .key(function(d) { return d.key; });
+                .key(function(d) { console.log('this is what ill return NEST!!', d); return d.key; });
 
             var area = d3.svg.area()
                 .interpolate("cardinal")
@@ -164,13 +168,23 @@
 
             function refreshChart (data) {
 
+                console.log('in from the fxn', data);
+
+                d3.selectAll('.axis').remove();
+
+                var xAxis = d3.svg.axis()
+                .scale(x)
+                .orient("bottom")
+                .ticks(d3.time.seconds);
+
 
                 //d3.json("../sim_data/jdata.json", function(err, data) {
 
-                   console.log('this is my data', data.splice(0));
+                   //console.log('this is my data', data.splice(0));
 
                   data.forEach(function(d) {
-                    d.date = format.parse(d.date);
+                    console.log('I got your date right here ... ', d);
+                    //d.date = format.parse(d.date);
                     d.value = +d.value;
                   });
 
@@ -233,16 +247,45 @@
                     function reloadProcInfo(){
                         fin.desktop.System.getProcessList(function(arrList){
 
-                            var timeKey = new Date().getTime();
+
+                            var date = new Date();
+
+                            var dateHHMMSS = date.toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1");
+
+                            var timeKey = date.getTime();
+
+
+
+                            var month = date.getUTCMonth();
+                            var day = date.getUTCDate();
+                            var year = date.getUTCFullYear();
+
+                            var dateString =  month + "/" + day  + "/" +  year;
+
+                            //console.log('this is the date string', dateString);
+
                             var currentProcesses = {};
                             currentProcesses[timeKey] = {};
 
 
                             arrList.forEach(function(item){
 
-                                item.timeKey = new Date(timeKey);
+                                item.timeKey = new Date(timeKey).toString();
+                                item.key = item.name;
+                                //item.key = timeKey;
+                                item.value = item.cpuUsage;
+                                item.value = 40;
+
+
+
+                                console.log('this is the date string', timeKey, typeof timeKey);
+
+                                //item['date'] = String(dateHHMMSS);
+                                item.date = new Date(timeKey);
                                 //console.log('this is the item ', item)
-                                var name = item.name;
+                                //var name = item.name;
+
+                                console.log('ill add this item', item);
 
                                 currentProcesses[timeKey][name] = item;
 
