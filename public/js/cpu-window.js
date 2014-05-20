@@ -78,14 +78,14 @@
         legend.data(data);
 
         legend.append('rect')
-            .attr("x", width - 155)
+            .attr("x", width - 195)
             .attr('y', function(d, i){ return i *  20;})
             .attr('width', 10)
             .attr('height', 10)
             .style("fill", function(d, i) { return z(i); });
 
         legend.append('text')
-            .attr("x", width - 140)
+            .attr("x", width - 180)
             .attr('y', function(d, i){ return (i *  20) + 9;})
             .text(function(d){ return d.name + ": " + d.cpuUsage });
 
@@ -159,14 +159,18 @@
     document.addEventListener('DOMContentLoaded', function() {
         fin.desktop.main(function () {
 
-            var procList = CappedArray(10);
+            var ofDraggable = document.querySelectorAll('.of-draggable')[0],
+                closeButton = document.querySelectorAll('#close-app')[0],
+                procList = CappedArray(10),
+                mainWindow = fin.desktop.Window.getCurrent();
+
+            /* kick off a recursive timeout call fetching process data */
             reloadProcInfo(procList,refreshChart)
 
-            //reloadProcInfo(procList,refreshChart)
-
-            // manProc = ManagedRecocurringProcess(reloadProcInfo,2000);
-
-            // manProc.start(procList,refreshChart);
+            //Close button event handler
+            closeButton.addEventListener('click', function() {
+                mainWindow.close();
+            });
 
             utils.registerDragHandler(ofDraggable, {
                 //once movement starts make the window transparent.
@@ -187,8 +191,6 @@
                 }
             });
 
-
-            //manProc.start(1,2);
         });
     });
 
@@ -198,7 +200,6 @@
 
 function reloadProcInfo(procList,refreshChart){
 
-    console.log('these are the arguments', arguments);
 
     fin.desktop.System.getProcessList(function(arrList){
 
@@ -272,44 +273,6 @@ function CappedArray (max) {
         getArray : function(){
             return me.arr
         }
-    }
-}
-
-
-function ManagedRecocurringProcess (fun, time){
-
-    var me = this;
-    this.run = true;
-    this.startArgs = null;
-
-    this.start = function  () {
-        var startArgs = arguments;
-        console.log('the args in the start ', arguments)
-        if (me.run) {
-            setTimeout(function(){
-                if (me.run){
-                    console.log('ill call with ',me.startArgs);
-                    fun.apply(null, me.startArgs);
-                    me.start.apply(null,me.startArgs);
-                }
-
-            },time);
-        }
-    };
-
-    this.restart = function(){
-        me.run = true;
-        me.start(arguments);
-    };
-
-    this.stop = function (){
-        me.run = false;
-    };
-
-    return {
-        start : this.start,
-        stop : this.stop,
-        restart : this.restart
     }
 }
 
