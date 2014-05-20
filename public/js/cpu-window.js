@@ -171,7 +171,7 @@
 
             //Close button event handler
             closeButton.addEventListener('click', function() {
-                mainWindow.close();
+                mainWindow.hide();
             });
 
             utils.registerDragHandler(ofDraggable, {

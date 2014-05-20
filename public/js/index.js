@@ -81,8 +81,18 @@
 
             //Cpu information button.
             cpuInfoButton.addEventListener('click', function() {
-                fin.desktop.System.showDeveloperTools();
-                cpuWindow = cpu.open();
+                mainWindow.getBounds(function (bounds) {
+                    var showCpu = function () {
+                        cpuWindow.moveTo(bounds.left + bounds.width, bounds.top);
+                        cpuWindow.show();
+                    };
+                    if (cpuWindow) {
+                        showCpu();
+                    } else {
+                        cpuWindow = cpu.open(showCpu);
+                    }
+                });
+
             });
 
             //Arrange windows in the desktop.
