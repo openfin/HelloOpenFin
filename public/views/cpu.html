@@ -1,229 +1,265 @@
 <!doctype html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title></title>
-        <meta name="description" content="OpenFin Hello World">
-        <link rel="stylesheet" href="../css/main.css">
-        <style>
-            html, body {
-                background-color : whitesmoke;
-            }
-            .axis path, .axis line {
-              fill: none;
-              stroke: #000;
-              shape-rendering: crispEdges;
-            }
-        </style>
-    </head>
-    <body>
-        <h1 class="company-header">CPU Usage</h1>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="description" content="OpenFin Hello World">
+    <link rel="stylesheet" href="../css/main.css">
+    <style>
+    html, body {
+        background-color : #222;
+        background-color : whitesmoke;
+    }
+    html {
+        color: silver;
+        font-size: 1em;
+        line-height: 1.4;
+    }
+
+    .axis path, .axis line {
+      fill: none;
+      stroke: #000;
+      stroke: #fff;
+      shape-rendering: crispEdges;
+  }
+
+  .y, .x{
+    /*color: #fff;*/
+    fill : #fff;
+    fill : #222;
+}
+
+</style>
+</head>
+<body>
+    <h1 class="company-header">CPU Usage</h1>
 
 
-        <script src="../bower_components/jquery/dist/jquery.js"></script>
-        <!-- <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script> -->
-        <script src="../bower_components/d3/d3.min.js"></script>
-        <!--<script src="../js/main.js"></script>-->
-        <script src="../js/cpu.js"></script>
+    <script src="../bower_components/jquery/dist/jquery.js"></script>
+    <!-- <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script> -->
+    <script src="../bower_components/d3/d3.min.js"></script>
+    <!--<script src="../js/main.js"></script>-->
+    <script src="../js/cpu.js"></script>
 
 
-        <script src="../js/charts.js"></script>
-        <script src="https://developer.openfin.co/release/adapter/js/openfin-desktop-js-adapter.js"></script>
-        <!-- <script src="http://local:8080/desktop/desktop-adapter/dist/openfin-desktop.js"></script> -->
+    <script src="../js/charts.js"></script>
+    <!-- <script src="https://developer.openfin.co/release/adapter/js/openfin-desktop-js-adapter.js"></script>-->
+    <script src="http://local:8080/desktop/desktop-adapter/dist/openfin-desktop.js"></script>
 
 
-        <script>
+    <script>
 
-            // var format = d3.time.format("%m/%d/%y");
+    /** this is mine *******/
 
-            // var margin = {top: 20, right: 30, bottom: 30, left: 40},
-            //     width = 960 - margin.left - margin.right,
-            //     height = 500 - margin.top - margin.bottom;
+        //we don't need this if just passing a date obj
+        //var format = d3.time.format("%m/%d/%y");
 
-            // var x = d3.time.scale()
-            //     .range([0, width]);
+        var margin = {top: 20, right: 30, bottom: 30, left: 40},
+        width = 960 - margin.left - margin.right,
+        height = 500 - margin.top - margin.bottom;
 
-            // var y = d3.scale.linear()
-            //     .range([height, 0]);
+        // var margin = {top: 20, right: 30, bottom: 30, left: 40},
+        //     width = 500 - margin.left - margin.right,
+        //     height = 400 - margin.top - margin.bottom;
 
-            // var z = d3.scale.category20c();
+        var x = d3.time.scale()
+            .range([0, width]);
 
-            // var xAxis = d3.svg.axis()
-            //     .scale(x)
-            //     .orient("bottom")
-            //     .ticks(d3.time.days);
+        var y = d3.scale.linear()
+            .range([height, 0]);
 
-            // var yAxis = d3.svg.axis()
-            //     .scale(y)
-            //     .orient("left");
+        var z = d3.scale.category10();
 
-            // var stack = d3.layout.stack()
-            //     .offset("zero")
-            //     .values(function(d) { return d.values; })
-            //     .x(function(d) { return d.date; })
-            //     .y(function(d) { return d.value; });
+        var yAxis = d3.svg.axis()
+            .scale(y)
+            .orient("left");
 
-            // var nest = d3.nest()
-            //     .key(function(d) { return d.key; });
+        var stack = d3.layout.stack()
+            .offset("zero")
+            .values(function(d) { return d.values; })
+            .x(function(d) { return d.date; })
+            .y(function(d) { return d.value; });
 
-            // var area = d3.svg.area()
-            //     .interpolate("cardinal")
-            //     .x(function(d) { return x(d.date); })
-            //     .y0(function(d) { return y(d.y0); })
-            //     .y1(function(d) { return y(d.y0 + d.y); });
+        var nest = d3.nest()
+            .key(function(d) { return d.key; });
 
-            // var svg = d3.select("body").append("svg")
-            //     .attr("width", width + margin.left + margin.right)
-            //     .attr("height", height + margin.top + margin.bottom)
-            //   .append("g")
-            //     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+        var area = d3.svg.area()
+            .interpolate("cardinal")
+            .x(function(d) { return x(d.date); })
+            .y0(function(d) { return y(d.y0); })
+            .y1(function(d) { return y(d.y0 + d.y); });
 
-            // d3.json("../sim_data/jdata.json", function(err, data) {
-
-            //    //console.log('this is my data', data.splice(0));
-
-            //   data.forEach(function(d) {
-            //     console.log('this is the D', d);
-            //     d.date = format.parse(d.date);
-            //     d.value = +d.value;
-            //     console.log('this is the after D', d);
-            //   });
+        var svg = d3.select("body").append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 
-            //    console.log('this is my nest ', nest.entries(data));
+        // var legend = svg.selectAll('.legend')
+        //     .data(data);
 
-            //   var layers = stack(nest.entries(data));
+        // legend.enter()
+        //     .append('g')
+        //     .attr('class', 'legend');
+
+        // legend.append('rect')
+        //     .attr("x", width - 155)
+        //     .attr('y', function(d, i){ return i *  20;})
+        //     .attr('width', 10)
+        //     .attr('height', 10)
+        //     .style("fill", function(d, i) { return z(i); });
+
+        // legend.append('text')
+        //     .attr("x", width - 140)
+        //     .attr('y', function(d, i){ return (i *  20) + 9;})
+        //     .text(function(d){ return d.name + ": " + d.cpuUsage });
 
 
 
+            // function renderLegend (data) {
 
-            //   console.log('these are my layers', layers);
-            //   //return;
+            //     svg.selectAll('.legend').remove();
+            //     console.log('this is the legend var ');
+            //     var legend = svg.append("g")
+            //       .attr("class", "legend")
+            //       .attr("height", 100)
+            //       .attr("width", 100)
+            //     .attr('transform', 'translate(-20,0)')
 
-            //   x.domain(d3.extent(data, function(d) { return d.date; }));
-            //   y.domain([0, d3.max(data, function(d) { return d.y0 + d.y; })]);
-
-            //   svg.selectAll(".layer")
-            //       .data(layers)
-            //     .enter().append("path")
-            //       .attr("class", "layer")
-            //       .attr("d", function(d) { return area(d.values); })
+            //     legend.selectAll('rect')
+            //       .data(data)
+            //       .enter()
+            //       .append("rect")
+            //       .attr("x", width - 155)
+            //       .attr("y", function(d, i){ return i *  20;})
+            //       .attr("width", 10)
+            //       .attr("height", 10)
             //       .style("fill", function(d, i) { return z(i); });
 
-            //   svg.append("g")
-            //       .attr("class", "x axis")
-            //       .attr("transform", "translate(0," + height + ")")
-            //       .call(xAxis);
+            //       legend.selectAll('text')
+            //           .data(data)
+            //           .enter()
+            //           .append("text")
+            //           .attr("class","legend-text")
+            //           .attr("x", width - 140)
+            //           .attr("y", function(d, i){ return i *  20 + 9;})
+            //           .text(function(d) {
+            //             //var text = color_hash[data.indexOf(d)][0];
+            //             //return text;
+            //             return d.key + ":  " + d.cpuUsage;
+            //           });
 
-            //   svg.append("g")
-            //       .attr("class", "y axis")
-            //       .call(yAxis);
-            // });
+            // }
 
+            function renderLegend (data, svg) {
 
+                //console.log('this is the svg and query', svg, d3.selectAll('.legend'));
+                svg.selectAll('.legend').remove();
 
-
-        /** this is mine *******/
-
-            //var format = d3.time.format("%m/%d/%y");
-            //var format = d3.time.format("%c");
-            var format = d3.time.format("%x");
-
-            var margin = {top: 20, right: 30, bottom: 30, left: 40},
-                width = 960 - margin.left - margin.right,
-                height = 500 - margin.top - margin.bottom;
-
-            var x = d3.time.scale()
-                .range([0, width]);
-
-            var y = d3.scale.linear()
-                .range([height, 0]);
-
-            var z = d3.scale.category20c();
+                if (data.length === 0) return;
 
 
+                var legendKeys = 0,
+                    dateStamp = data[0].date.toString(),
+                    dataLength = data.length,
+                    legend,
+                    i;
 
-            var yAxis = d3.svg.axis()
-                .scale(y)
-                .orient("left");
-
-            var stack = d3.layout.stack()
-                .offset("zero")
-                .values(function(d) { return d.values; })
-                .x(function(d) { return d.date; })
-                .y(function(d) { return d.value; });
-
-            var nest = d3.nest()
-                .key(function(d) { return d.key; });
-
-            var area = d3.svg.area()
-                .interpolate("cardinal")
-                .x(function(d) { return x(d.date); })
-                .y0(function(d) { return y(d.y0); })
-                .y1(function(d) { return y(d.y0 + d.y); });
-
-            var svg = d3.select("body").append("svg")
-                .attr("width", width + margin.left + margin.right)
-                .attr("height", height + margin.top + margin.bottom)
-              .append("g")
-                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+                for (i = 0; i < dataLength; i++ ) {
+                    //console.log('my compairison', data[1].date.toString() ,dateStamp, data[1].date.toString() === dateStamp)
+                    if (data[i].date.toString() === dateStamp) {
+                        legendKeys++
+                    }
+                    else {
+                        break;
+                    }
+                }
 
 
+                console.log('this is t ' );
+
+                legend = svg.selectAll('.legend')
+                    .data(data.slice(0,legendKeys));
+
+                legend.enter()
+                    .append('g')
+                    .attr('class', 'legend');
+
+                legend.data(data);
+
+                legend.append('rect')
+                    .attr("x", width - 155)
+                    .attr('y', function(d, i){ return i *  20;})
+                    .attr('width', 10)
+                    .attr('height', 10)
+                    .style("fill", function(d, i) { return z(i); });
+
+                legend.append('text')
+                    .attr("x", width - 140)
+                    .attr('y', function(d, i){ return (i *  20) + 9;})
+                    .text(function(d){ return d.name + ": " + d.cpuUsage });
+
+
+            }
 
 
             function refreshChart (data) {
 
-                console.log('in from the fxn', data);
+               // console.log('in from the fxn', data);
 
+                //here we are clearing the old data, this should really be
+                //handled on an upfa
                 d3.selectAll('.axis').remove();
                 svg.selectAll(".layer").remove();
+
 
                 var xAxis = d3.svg.axis()
                 .scale(x)
                 .orient("bottom")
                 .ticks(d3.time.seconds);
 
-                  data.forEach(function(d) {
-
+                data.forEach(function(d) {
                     //we are already passing a date obj (thats what it wants)
                     //d.date = format.parse(d.date);
 
                     d.value = +d.value;
-                  });
+                });
 
 
-                  var layers = stack(nest.entries(data));
+                var layers = stack(nest.entries(data));
 
+                x.domain(d3.extent(data, function(d) { return d.date; }));
+                  //y.domain([0, d3.max(data, function(d) { return d.y0 + d.y; })]);
 
-                  //console.log('these are my layers', layers);
-
-                  x.domain(d3.extent(data, function(d) { return d.date; }));
-                  y.domain([0, d3.max(data, function(d) { return d.y0 + d.y; })]);
+                  //lets have the domain of y extend at least to 30
+                  var dataMax = d3.max(data, function(d) { return d.y0 + d.y; });
+                  var minDomain = dataMax > 60 ? dataMax + 30 : dataMax + 60;
+                  y.domain([0, minDomain  ]);
 
                   svg.selectAll(".layer")
-                      .data(layers)
-                    .enter().append("path")
-                      .attr("class", "layer")
-                      .attr("d", function(d) { return area(d.values); })
-                      .style("fill", function(d, i) { return z(i); });
+                  .data(layers)
+                  .enter().append("path")
+                  .attr("class", "layer")
+                  .attr("d", function(d) { return area(d.values); })
+                  .style("fill", function(d, i) { return z(i); });
+                    //
 
-                  svg.append("g")
-                      .attr("class", "x axis")
-                      .attr("transform", "translate(0," + height + ")")
-                      .call(xAxis);
+                    svg.append("g")
+                    .attr("class", "x axis")
+                    .attr("transform", "translate(0," + (height + 3) + ")")
+                    .call(xAxis);
 
-                  svg.append("g")
-                      .attr("class", "y axis")
-                      .call(yAxis);
+                    svg.append("g")
+                    .attr("class", "y axis")
+                    .call(yAxis);
 
 
 
+                    renderLegend(data, svg);
 
 
             }//end refresh chart
-
-
-
 
 
 
@@ -247,7 +283,7 @@
                     function reloadProcInfo(){
                         fin.desktop.System.getProcessList(function(arrList){
 
-                            console.log('this is from the procList return', arrList);
+                            //console.log('this is from the procList return', arrList);
 
                             var date = new Date();
 
@@ -259,12 +295,8 @@
 
                             arrList.forEach(function(item){
 
-                                item.timeKey = new Date(timeKey).toString();
                                 item.key = item.name;
-                                //item.key = timeKey;
                                 item.value = item.cpuUsage;
-                                //item.value = Math.random() * 1000 ;
-
                                 item.date = new Date(timeKey);
 
                                 currentProcesses[timeKey][item.name] = item;
@@ -275,7 +307,7 @@
                             procList.addToFront(currentProcesses);
 
 
-                            console.log('this is the full proc log', procListToD3Array(procList.getArray()));
+                            //console.log('this is the full proc log', procListToD3Array(procList.getArray()));
 
                             //update the chart each cycle
                             refreshChart(procListToD3Array(procList.getArray()));
@@ -287,19 +319,15 @@
 
 
                     function procListToD3Array(procList) {
-
-                       // console.log('this is the inbound list', procList);
                         var returnArr = [],
-                            listLength = procList.length;
+                        listLength = procList.length;
 
                         while (listLength--){
                             var procSet = procList[listLength];
                             for (var proc in procSet){
-                                //console.log('this is one process', proc, procSet[proc]);
                                 for (indiProc in procSet[proc] ) {
                                     returnArr.unshift( procSet[proc][indiProc]);
                                 }
-
                             }
                         }
 
@@ -371,12 +399,9 @@
                         }
                     }
 
-
                 });
-
-
             });
 
-        </script>
-    </body>
+</script>
+</body>
 </html>
