@@ -1,7 +1,6 @@
-//$(function(){
 var cpu = cpu || {};
-
 (function() {
+    'use strict';
 
     function genConfig() {
         var rand = Math.random();
@@ -28,4 +27,3 @@ var cpu = cpu || {};
         return cpuWindow;
     };
 })();
-//})//end ready
