@@ -81,8 +81,8 @@
 
             //Cpu information button.
             cpuInfoButton.addEventListener('click', function() {
-                mainWindow.getBounds(function (bounds) {
-                    var showCpu = function () {
+                mainWindow.getBounds(function(bounds) {
+                    var showCpu = function() {
                         cpuWindow.moveTo(bounds.left + bounds.width, bounds.top);
                         cpuWindow.show();
                     };
