@@ -1,8 +1,5 @@
 (function() {
     'use strict';
-    var cpu = cpu || {};
-    var fin = fin || {};
-
     document.addEventListener('DOMContentLoaded', function() {
 
         //get the
