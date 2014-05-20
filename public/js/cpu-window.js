@@ -18,7 +18,9 @@
     y = d3.scale.linear()
         .range([height, 0]);
 
-    z = d3.scale.category10();
+    z = d3.scale.ordinal()
+        .domain(["clear blue", "clear blue 2", "clear purple", "dark purple", "skin", "orange", "bright orange", "a", "b", "c", "d"])
+        .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 
     yAxis = d3.svg.axis()
         .scale(y)
