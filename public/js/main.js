@@ -1,5 +1,8 @@
 (function() {
     'use strict';
+    var cpu = cpu || {};
+    var fin = fin || {};
+
     document.addEventListener('DOMContentLoaded', function() {
 
         //get the
@@ -33,7 +36,7 @@
             //Cpu information button.
             cpuInfoButton.addEventListener('click', function() {
                 fin.desktop.System.showDeveloperTools();
-                alert('dev tools?');
+                cpu.open();
             });
 
             //set up window move.

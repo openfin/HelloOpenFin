@@ -1,0 +1,16 @@
+{
+    "env": "2.0.5.65",
+    "desktop_core_url": "https://demoappdirectory.openf.in/desktop/desktopcore/2.0.5/index.html",
+    "desktop_controller_url": "https://demoappdirectory.openf.in/desktop/desktopcontroller/2.0.5/index.html",
+    "websocket_ssl" : false,
+    "devtools_port": 9090,
+    "websocket_port": 9696,
+    "logging": true,
+    "startup_app": {
+        "name": "Example App",
+        "uuid": "exampleApp",
+        "url": "http://local:5000/",
+        "frame": true,
+        "autoShow": true
+    }
+}
