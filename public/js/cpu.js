@@ -5,8 +5,10 @@ var cpu = cpu || {};
     cpu.open = function(callback) {
         var config = {
             "name": "cpuChild",
-            "defaultWidth": 960,
-            "defaultHeight": 390,
+            "defaultWidth": 525,
+            "defaultHeight": 395,
+            "maxWidth": 525,
+            "maxHeight": 395,
             "autoShow": false,
             "url": 'views/cpu.html',
             "cornerRounding": {

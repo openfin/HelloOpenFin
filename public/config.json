@@ -12,7 +12,7 @@
         "name": "Hello World",
         "runtime": "2.0.5.65",
         "runtimeArgs": "",
-        "source": "http://local:5000/config.json"
+        "source": "http://localhost:5000/config.json"
     },
     "startup_app": {
         "applicationIcon": "https://demoappdirectory.openf.in/desktop/config/apps/OpenFin/StartMenu/2.0.5.16/icon.png",
@@ -24,7 +24,7 @@
         "frame": false,
         "name": "OpenFin Hello World",
         "resizable": false,
-        "url": "http://local:5000",
+        "url": "http://localhost:5000",
         "uuid": "OpenFinHelloWorld",
         "cornerRounding" : {
             "width" : 5,

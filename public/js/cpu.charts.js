@@ -13,7 +13,7 @@ var cpuChart = (function() {
             bottom: 30,
             left: 40
         },
-        width = 900 - margin.left - margin.right,
+        width = 490 - margin.left - margin.right,
         height = 280 - margin.top - margin.bottom;
 
     x = d3.time.scale()
@@ -132,11 +132,10 @@ var cpuChart = (function() {
         d3.selectAll('.axis').remove();
         svg.selectAll(".layer").remove();
 
-
         xAxis = d3.svg.axis()
             .scale(x)
             .orient("bottom")
-            .ticks(d3.time.seconds);
+            .ticks(d3.time.seconds, 5);
 
         data.forEach(function(d) {
             //we are already passing a date obj (thats what it wants)
@@ -144,7 +143,6 @@ var cpuChart = (function() {
 
             d.value = +d.value;
         });
-
 
         layers = stack(nest.entries(data));
 
@@ -170,7 +168,6 @@ var cpuChart = (function() {
             .style("fill", function(d, i) {
                 return z(i);
             });
-        //
 
         svg.append("g")
             .attr("class", "x axis")
@@ -181,10 +178,7 @@ var cpuChart = (function() {
             .attr("class", "y axis")
             .call(yAxis);
 
-
-
         renderLegend(data, svg);
-
 
     } //end refresh chart
 
