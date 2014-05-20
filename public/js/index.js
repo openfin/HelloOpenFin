@@ -66,6 +66,9 @@
             //show the main window now that we are ready.
             mainWindow.show();
 
+            //start the cpu window in a hidded state
+            var cpuWindow = cpu.open();
+
             //Close button event handler
             closeButton.addEventListener('click', function() {
                 mainWindow.close();
@@ -82,14 +85,10 @@
             //Cpu information button.
             cpuInfoButton.addEventListener('click', function() {
                 mainWindow.getBounds(function(bounds) {
-                    var showCpu = function() {
+
+                    if (cpuWindow) {
                         cpuWindow.moveTo(bounds.left + bounds.width, bounds.top);
                         cpuWindow.show();
-                    };
-                    if (cpuWindow) {
-                        showCpu();
-                    } else {
-                        cpuWindow = cpu.open(showCpu);
                     }
                 });
 
