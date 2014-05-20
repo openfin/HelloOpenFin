@@ -126,7 +126,7 @@
 
         //lets have the domain of y extend at least to 10
         dataMax = d3.max(data, function(d) { return d.y0 + d.y; });
-        minDomain = (dataMax + 5) < 10 ? 10 : dataMax + 5 ;
+        minDomain = (dataMax + 8) < 10 ? 10 : dataMax + 8 ;
         y.domain([0, minDomain  ]);
 
         svg.selectAll(".layer")
