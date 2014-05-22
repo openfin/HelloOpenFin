@@ -2,72 +2,30 @@
     'use strict';
     document.addEventListener('DOMContentLoaded', function() {
 
-        var desktopNotificationButton = document.querySelectorAll('#desktop-notification')[0],
-            cpuInfoButton = document.querySelectorAll('#cpu-info')[0],
-            closeButton = document.querySelectorAll('#close-app')[0],
-            ofDraggable = document.querySelectorAll('.of-draggable')[0],
-            arrangeWindowsButton = document.querySelectorAll('#arrange-windows')[0];
-
         //OpenFin is ready.
         fin.desktop.main(function() {
-
-            //the OpenFin main window.
+            //request the windows.
             var mainWindow = fin.desktop.Window.getCurrent(),
-                transparentOpacityAnimation = {
-                    opacity: 0.15,
-                    duration: 500
-                },
-                solidOpacityAnimation = {
-                    opacity: 1,
-                    duration: 500
-                },
-                cpuWindow,
-                monitorInfo;
+                //start the cpu window in a hidded state
+                cpuWindow = cpu.open();
 
-            var arrangeWindows = function(destination, mainWindowBounds) {
-                mainWindow.animate({
-                        opacity: transparentOpacityAnimation,
-                        position: destination
-                    }, {
-                        interrupt: false
-                    },
+            //set up window move effects.
+            utils.registerDragHandler(mainWindow);
 
-                    function(evt) {
-                        mainWindow.animate({
-                            opacity: solidOpacityAnimation
-                        });
-                    });
+            //register the event handlers.
+            setEventHandlers(mainWindow, cpuWindow);
 
-                if (cpuWindow) {
-                    cpuWindow.getBounds(function(bounds) {
-                        if (destination.left < mainWindowBounds.width) {
-                            destination.left += mainWindowBounds.width;
-                        } else {
-                            destination.left -= bounds.width;
-                        }
-                        cpuWindow.animate({
-                            opacity: transparentOpacityAnimation,
-                            position: destination
-                        }, {
-                            interrupt: false
-                        }, function(evt) {
-                            cpuWindow.animate({
-                                opacity: solidOpacityAnimation
-                            });
-                        });
-                    });
-                }
-            };
-
-            //set the monitor information.
-            fin.desktop.System.getMonitorInfo(function(info) {
-                monitorInfo = info;
-            });
             //show the main window now that we are ready.
             mainWindow.show();
+        });
 
-            //start the cpu window in a hidded state
-            var cpuWindow = cpu.open();
+        //set event handlers for the different buttons.
+        var setEventHandlers = function(mainWindow, cpuWindow) {
+            //Buttons and components.
+            var desktopNotificationButton = document.querySelectorAll('#desktop-notification')[0],
+                cpuInfoButton = document.querySelectorAll('#cpu-info')[0],
+                closeButton = document.querySelectorAll('#close-app')[0],
+                arrangeWindowsButton = document.querySelectorAll('#arrange-windows')[0];
 
             //Close button event handler
             closeButton.addEventListener('click', function() {
@@ -85,52 +43,84 @@
             //Cpu information button.
             cpuInfoButton.addEventListener('click', function() {
                 mainWindow.getBounds(function(bounds) {
-
-                    if (cpuWindow) {
-                        cpuWindow.moveTo(bounds.left + bounds.width, bounds.top);
-                        cpuWindow.show();
-                    }
+                    cpuWindow.moveTo(bounds.left + bounds.width, bounds.top);
+                    cpuWindow.show();
                 });
-
             });
 
             //Arrange windows in the desktop.
             arrangeWindowsButton.addEventListener('click', function() {
                 //move them to the top left by default, if windows are there move to bottom right.
-                mainWindow.getBounds(function(bounds) {
-                    var destination = {
-                        top: 0,
-                        left: 0,
-                        duration: 1000
-                    };
-                    if (bounds.top === destination.top && bounds.left === destination.left) {
-                        destination.top = monitorInfo.primaryMonitor.availableRect.bottom - bounds.height;
-                        destination.left = monitorInfo.primaryMonitor.availableRect.right - bounds.width;
-                    }
-                    arrangeWindows(destination, bounds);
+                fin.desktop.System.getMonitorInfo(function(monitorInfo) {
+                    mainWindow.getBounds(function(mainWindowBounds) {
+                        cpuWindow.getBounds(function(cpuWindowBounds) {
+                            animateWindows({
+                                monitorInfo: monitorInfo,
+                                mainWindowBounds: mainWindowBounds,
+                                cpuWindowBounds: cpuWindowBounds,
+                                mainWindow: mainWindow,
+                                cpuWindow: cpuWindow
+                            });
+                        });
+                    });
+                });
+            });
+        };
+
+        //animates both windows.
+        var animateWindows = function(options) {
+            //expects an options object with the following shape:
+            // {
+            //     monitorInfo,
+            //     mainWindowBounds,
+            //     cpuWindowBounds,
+            //     mainWindow,
+            //     cpuWindow
+            // }
+            var destination = {
+                top: 0,
+                left: 0,
+                duration: 1000
+            };
+
+            //check the position and adjust the destination.
+            if (options.mainWindowBounds.top === destination.top && options.mainWindowBounds.left === destination.left) {
+                destination.top = options.monitorInfo.primaryMonitor.availableRect.bottom - options.mainWindowBounds.height;
+                destination.left = options.monitorInfo.primaryMonitor.availableRect.right - options.mainWindowBounds.width;
+            }
+
+            //animate the main window.
+            options.mainWindow.animate({
+                    opacity: utils.transparentOpacityAnimation,
+                    position: destination
+                }, {
+                    interrupt: false
+                },
+                function(evt) {
+                    options.mainWindow.animate({
+                        opacity: utils.solidOpacityAnimation
+                    });
+                });
+
+            //update destination for the cpuWindow.
+            if (destination.left < options.mainWindowBounds.width) {
+                destination.left += options.mainWindowBounds.width;
+            } else {
+                destination.left -= options.cpuWindowBounds.width;
+            }
+            //animate the cpu child window.
+            options.cpuWindow.animate({
+                opacity: utils.transparentOpacityAnimation,
+                position: destination
+            }, {
+                interrupt: false
+            }, function(evt) {
+                options.cpuWindow.animate({
+                    opacity: utils.solidOpacityAnimation
                 });
             });
 
-            //set up window move.
-            utils.registerDragHandler(ofDraggable, {
-                //once movement starts make the window transparent.
-                onDragStart: function(x, y) {
-                    mainWindow.animate({
-                        opacity: transparentOpacityAnimation
-                    });
-                },
-                //move the window with the mouse
-                onDrag: function(X, Y) {
-                    mainWindow.moveTo(X, Y);
-                },
-                //window can now stop being transparent.
-                onDragEnd: function() {
-                    mainWindow.animate({
-                        opacity: solidOpacityAnimation
-                    });
-                }
-            });
+        };
 
-        });
     });
 }());
