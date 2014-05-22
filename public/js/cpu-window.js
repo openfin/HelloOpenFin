@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
     fin.desktop.main(function() {
 
         var closeButton = document.querySelectorAll('#close-app')[0],
+            minimizeButton = document.querySelectorAll('#minimize-window')[0],
             mainWindow = fin.desktop.Window.getCurrent();
 
         /* kick off a d3 chart that displays cpu usage data */
@@ -16,6 +17,11 @@ document.addEventListener('DOMContentLoaded', function() {
         //Close button event handler
         closeButton.addEventListener('click', function() {
             mainWindow.hide();
+        });
+
+        //Minimize button event handler
+        minimizeButton.addEventListener('click', function() {
+            mainWindow.minimize();
         });
 
         //set up window move effects.
