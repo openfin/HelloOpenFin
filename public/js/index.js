@@ -25,11 +25,17 @@
             var desktopNotificationButton = document.querySelectorAll('#desktop-notification')[0],
                 cpuInfoButton = document.querySelectorAll('#cpu-info')[0],
                 closeButton = document.querySelectorAll('#close-app')[0],
-                arrangeWindowsButton = document.querySelectorAll('#arrange-windows')[0];
+                arrangeWindowsButton = document.querySelectorAll('#arrange-windows')[0],
+                minimizeButton = document.querySelectorAll('#minimize-window')[0];
 
             //Close button event handler
             closeButton.addEventListener('click', function() {
                 mainWindow.close();
+            });
+
+            //Minimize button event handler
+            minimizeButton.addEventListener('click', function() {
+                mainWindow.minimize();
             });
 
             //Desktop notification event handler
@@ -42,9 +48,14 @@
 
             //Cpu information button.
             cpuInfoButton.addEventListener('click', function() {
-                mainWindow.getBounds(function(bounds) {
-                    cpuWindow.moveTo(bounds.left + bounds.width, bounds.top);
-                    cpuWindow.show();
+                cpuWindow.isShowing(function(showing) {
+                    if (!showing) {
+                        mainWindow.getBounds(function(bounds) {
+                            cpuWindow.moveTo(bounds.left + bounds.width, bounds.top, function() {
+                                cpuWindow.show();
+                            });
+                        });
+                    }
                 });
             });
 
@@ -94,7 +105,7 @@
                     opacity: utils.transparentOpacityAnimation,
                     position: destination
                 }, {
-                    interrupt: false
+                    interrupt: true
                 },
                 function(evt) {
                     options.mainWindow.animate({
@@ -113,7 +124,7 @@
                 opacity: utils.transparentOpacityAnimation,
                 position: destination
             }, {
-                interrupt: false
+                interrupt: true
             }, function(evt) {
                 options.cpuWindow.animate({
                     opacity: utils.solidOpacityAnimation
