@@ -7,14 +7,25 @@
     <link rel="stylesheet" href="../css/main.css">
 </head>
 <body class="of-draggable">
-    <div id="close-app" class="btn cpu-close">x</div>
-    <h1 class="company-header">CPU Usage</h1>
-
-
+    <div class="container of-draggable">
+        <div id="minimize-window" class="btn top-btn cpu-minimize">
+            <div class="minimize-bar"></div>
+        </div>
+        <div id="close-app" class="btn top-btn cpu-close">x</div>
+        <div class="top-description">
+            <h1>
+                CPU Usage
+            </h1>
+        </div>
+        <div class="chart-container">
+            <div id="chart">
+            </div>
+        </div>
+    </div>
     <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
     <script src="https://developer.openfin.co/release/adapter/js/openfin-desktop-js-adapter.js"></script>
-    <script src="../js/utils.js"></script>
-    <script src="../js/cpu.charts.js"></script>
-    <script src="../js/cpu-window.js"></script>
+    <script src="/js/utils.js"></script>
+    <script src="/js/cpu.charts.js"></script>
+    <script src="/js/cpu-window.js"></script>
 </body>
 </html>

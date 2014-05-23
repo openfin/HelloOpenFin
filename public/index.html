@@ -6,9 +6,12 @@
         <meta name="description" content="OpenFin Hello World">
         <link rel="stylesheet" href="css/main.css">
     </head>
-    <body class="of-draggable">
-        <div class="container">
-            <div id="close-app" class="btn close">x</div>
+    <body >
+        <div class="container of-draggable">
+            <div id="minimize-window" class="btn top-btn minimize">
+                <div class="minimize-bar"></div>
+            </div>
+            <div id="close-app" class="btn top-btn close">x</div>
             <div class="top-description">
                 <h1 class="reduced-margin">
                     OpenFin
@@ -24,7 +27,7 @@
             <div class="menu-buttons">
                 <button class="btn" id="desktop-notification">Send Notification</button>
                 <button class="btn" id="cpu-info">Cpu Info</button>
-                <button class="btn" id="arrange-windows">Arrange Windows</button>
+                <button class="btn" id="arrange-windows">Animate</button>
             </div>
         </div>
         <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
