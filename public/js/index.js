@@ -2,6 +2,9 @@
     'use strict';
     document.addEventListener('DOMContentLoaded', function() {
 
+        //will use this value for positioning the cpuWindow.
+        var cpuWindowMargin = 10;
+
         //OpenFin is ready.
         fin.desktop.main(function() {
             //request the windows.
@@ -54,7 +57,7 @@
                 cpuWindow.isShowing(function(showing) {
                     if (!showing) {
                         mainWindow.getBounds(function(bounds) {
-                            cpuWindow.moveTo(bounds.left + bounds.width, bounds.top, function() {
+                            cpuWindow.moveTo(bounds.left + bounds.width + cpuWindowMargin, bounds.top, function() {
                                 cpuWindow.show();
                             });
                         });
@@ -118,9 +121,9 @@
 
             //update destination for the cpuWindow.
             if (destination.left < options.mainWindowBounds.width) {
-                destination.left += options.mainWindowBounds.width;
+                destination.left += (options.mainWindowBounds.width + cpuWindowMargin);
             } else {
-                destination.left -= options.cpuWindowBounds.width;
+                destination.left -= (options.cpuWindowBounds.width + cpuWindowMargin);
             }
             //animate the cpu child window.
             options.cpuWindow.animate({

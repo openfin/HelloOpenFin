@@ -63,7 +63,7 @@ textarea {
 body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     text-align: center;
-    background-color: #2d2e29;
+    background-color: #2D2D2D;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -75,7 +75,7 @@ body:active {
     cursor: -webkit-grabbing !important;
 }
 h1,h2,h3 {
-    color:#fb9e25;
+    color:#ABCBE8;
 }
 .container {
     -webkit-app-region: drag;
@@ -88,14 +88,22 @@ h1,h2,h3 {
 .container:active {
     cursor: -webkit-grabbing !important;
 }
+.top-description {
+    margin-top: 20px
+}
 .top-description h1 {
     margin-bottom: -10px;
 }
-.top-description span {
-    color:#5972a7;
-}
 path.slice{
     stroke-width:2px;
+}
+
+.name-open {
+    color:#ABCBE8;
+}
+
+.name-fin {
+    color:#4F8ABA;
 }
 
 polyline{
@@ -107,12 +115,12 @@ polyline{
 
 .chart-container {
     max-height: 400px;
-    margin: 15px 0 -15px 10px;
+    margin: 0 0 -30px 10px;
 }
 .btn {
     padding: 5px;
     font-size: 14px;
-    color: #2d2e29;
+    color: #2D2D2D;
     background-color: #595b5b;
     border: 1px solid #333434;
     margin-right: 0px;
@@ -155,7 +163,7 @@ polyline{
    left: 480px;
 }
 .minimize-bar {
-    background: #2d2e29;
+    background: #2D2D2D;
     width: 8px;
     height: 2px;
     display: inline-block;
@@ -165,12 +173,18 @@ polyline{
 
 .notification-body span {
     margin-top: -10px;
-    color:#5972a7;
+    color:#4F8ABA;
+    font-weight: bold;
 }
 .notification-body h3 {
     margin-bottom: -5px;
 }
 
+.logo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
 
 /****************************************
 * styles for cpu window ****************/
