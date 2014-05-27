@@ -3,7 +3,7 @@ var WindowFactory = WindowFactory || {},
 (function() {
     'use strict';
 
-    WindowFactory.create = function(customConfig,callback) {
+    WindowFactory.create = function(customConfig, callback) {
         var config = {
             "name": "ChildWindow",
             "defaultWidth": 525,
@@ -18,9 +18,9 @@ var WindowFactory = WindowFactory || {},
             },
             "frame": false,
             "resizable": false
-        },
-        customConfig = customConfig || {};
+        };
 
+        customConfig = customConfig || {};
         utils.extend(config, customConfig);
 
         var newWindow = new fin.desktop.Window(config, callback, function(err) {

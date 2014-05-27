@@ -25,11 +25,11 @@
         //set event handlers for the different buttons.
         var setEventHandlers = function(mainWindow, cpuWindow) {
             //Buttons and components.
-            var desktopNotificationButton = document.querySelectorAll('#desktop-notification')[0],
-                cpuInfoButton = document.querySelectorAll('#cpu-info')[0],
-                closeButton = document.querySelectorAll('#close-app')[0],
-                arrangeWindowsButton = document.querySelectorAll('#arrange-windows')[0],
-                minimizeButton = document.querySelectorAll('#minimize-window')[0];
+            var desktopNotificationButton = document.getElementById('desktop-notification'),
+                cpuInfoButton = document.getElementById('cpu-info'),
+                closeButton = document.getElementById('close-app'),
+                arrangeWindowsButton = document.getElementById('arrange-windows'),
+                minimizeButton = document.getElementById('minimize-window');
 
             //Close button event handler
             closeButton.addEventListener('click', function() {
