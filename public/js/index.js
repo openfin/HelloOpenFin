@@ -7,7 +7,10 @@
             //request the windows.
             var mainWindow = fin.desktop.Window.getCurrent(),
                 //start the cpu window in a hidded state
-                cpuWindow = cpu.open();
+                cpuWindow = WindowFactory.create({
+                    "name": "cpuChild",
+                    "url": 'views/cpu.html',
+                });
 
             //set up window move effects.
             utils.registerDragHandler(mainWindow);

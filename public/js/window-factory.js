@@ -1,28 +1,32 @@
-var cpu = cpu || {};
+var WindowFactory = WindowFactory || {},
+    utils = utils || {};
 (function() {
     'use strict';
 
-    cpu.open = function(callback) {
+    WindowFactory.create = function(customConfig,callback) {
         var config = {
-            "name": "cpuChild",
+            "name": "ChildWindow",
             "defaultWidth": 525,
             "defaultHeight": 395,
             "maxWidth": 525,
             "maxHeight": 395,
             "autoShow": false,
-            "url": 'views/cpu.html',
+            "url": 'about:blank',
             "cornerRounding": {
                 "width": 5,
                 "height": 5
             },
             "frame": false,
             "resizable": false
-        };
+        },
+        customConfig = customConfig || {};
 
-        var cpuWindow = new fin.desktop.Window(config, callback, function(err) {
+        utils.extend(config, customConfig);
+
+        var newWindow = new fin.desktop.Window(config, callback, function(err) {
             console.log('this was the err', err);
         });
 
-        return cpuWindow;
+        return newWindow;
     };
 })();
