@@ -7,8 +7,8 @@ document.addEventListener('DOMContentLoaded', function() {
     //OpenFin is ready.
     fin.desktop.main(function() {
 
-        var closeButton = document.querySelectorAll('#close-app')[0],
-            minimizeButton = document.querySelectorAll('#minimize-window')[0],
+        var closeButton = document.getElementById('close-app'),
+            minimizeButton = document.getElementById('minimize-window'),
             mainWindow = fin.desktop.Window.getCurrent();
 
         /* kick off a d3 chart that displays cpu usage data */
