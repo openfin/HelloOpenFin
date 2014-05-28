@@ -2,7 +2,7 @@ var utils = utils || {};
 (function() {
     'use strict';
 
-    var transitionDuration = 300,
+    var transitionDuration = 200,
         transparentOpacityVal = 0.7;
 
     //transparency animation used.
@@ -22,34 +22,6 @@ var utils = utils || {};
     //margin between the main window and the cpu window.
     utils.cpuWindowMargin = 10;
 
-    //will make an object dragable.
-    utils.registerDragHandler = function registerDragHandler(mainWindow) {
-
-        var boundsChanging = false;
-
-        mainWindow.addEventListener("bounds-changing", function() {
-            if (!boundsChanging) {
-                //animate the main window.
-                mainWindow.animate({
-                    opacity: utils.transparentOpacityAnimation,
-                }, {
-                    interrupt: false
-                });
-                boundsChanging = true;
-            }
-        });
-
-        mainWindow.addEventListener("bounds-changed", function() {
-            mainWindow.animate({
-                opacity: utils.solidOpacityAnimation
-            }, {
-                interrupt: false
-            });
-
-            boundsChanging = false;
-        });
-
-    };
 
     utils.extend = function(source, origin) {
         for (var key in origin) {

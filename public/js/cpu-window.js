@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         var closeButton = document.getElementById('close-app'),
             minimizeButton = document.getElementById('minimize-window'),
+            draggableArea = document.querySelector('.container'),
             mainWindow = fin.desktop.Window.getCurrent();
 
         /* kick off a d3 chart that displays cpu usage data */
@@ -24,8 +25,22 @@ document.addEventListener('DOMContentLoaded', function() {
             mainWindow.minimize();
         });
 
-        //set up window move effects.
-        utils.registerDragHandler(mainWindow);
+        //set the drag animations.
+        mainWindow.defineDraggableArea(draggableArea, function(data) {
+            mainWindow.animate({
+                opacity: utils.transparentOpacityAnimation,
+            }, {
+                interrupt: false
+            });
+        }, function(data) {
+            mainWindow.animate({
+                opacity: utils.solidOpacityAnimation
+            }, {
+                interrupt: false
+            });
+        }, function(err) {
+            console.log(err);
+        });
 
     });
 });
