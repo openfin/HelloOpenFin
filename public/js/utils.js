@@ -19,6 +19,9 @@ var utils = utils || {};
         duration: transitionDuration
     };
 
+    //margin between the main window and the cpu window.
+    utils.cpuWindowMargin = 10;
+
     //will make an object dragable.
     utils.registerDragHandler = function registerDragHandler(mainWindow) {
 
