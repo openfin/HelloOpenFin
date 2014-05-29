@@ -6,6 +6,7 @@
         fin.desktop.main(function() {
             //request the windows.
             var mainWindow = fin.desktop.Window.getCurrent(),
+                draggableArea = document.querySelector('.container'),
                 //start the cpu window in a hidded state
                 cpuWindow = WindowFactory.create({
                     "name": "cpuChild",
@@ -13,10 +14,27 @@
                 });
 
             //set up window move effects.
-            utils.registerDragHandler(mainWindow);
+            //utils.registerDragHandler(mainWindow);
 
             //register the event handlers.
             setEventHandlers(mainWindow, cpuWindow);
+
+            //set the drag animations.
+            mainWindow.defineDraggableArea(draggableArea, function(data) {
+                mainWindow.animate({
+                    opacity: utils.transparentOpacityAnimation,
+                }, {
+                    interrupt: false
+                });
+            }, function(data) {
+                mainWindow.animate({
+                    opacity: utils.solidOpacityAnimation
+                }, {
+                    interrupt: false
+                });
+            }, function(err) {
+                console.log(err);
+            });
 
             //show the main window now that we are ready.
             mainWindow.show();
@@ -54,7 +72,7 @@
                 cpuWindow.isShowing(function(showing) {
                     if (!showing) {
                         mainWindow.getBounds(function(bounds) {
-                            cpuWindow.moveTo(bounds.left + bounds.width, bounds.top, function() {
+                            cpuWindow.moveTo(bounds.left + bounds.width + utils.cpuWindowMargin, bounds.top, function() {
                                 cpuWindow.show();
                             });
                         });
@@ -118,9 +136,9 @@
 
             //update destination for the cpuWindow.
             if (destination.left < options.mainWindowBounds.width) {
-                destination.left += options.mainWindowBounds.width;
+                destination.left += (options.mainWindowBounds.width + utils.cpuWindowMargin);
             } else {
-                destination.left -= options.cpuWindowBounds.width;
+                destination.left -= (options.cpuWindowBounds.width + utils.cpuWindowMargin);
             }
             //animate the cpu child window.
             options.cpuWindow.animate({
@@ -133,8 +151,6 @@
                     opacity: utils.solidOpacityAnimation
                 });
             });
-
         };
-
     });
 }());
