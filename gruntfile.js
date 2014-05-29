@@ -49,5 +49,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-jsbeautifier');
 
     grunt.registerTask('default', ['jshint', 'jsbeautifier']);
+    grunt.registerTask('test', ['jshint', 'jsbeautifier']);
 
 };

@@ -78,7 +78,6 @@ h1,h2,h3 {
     color:#ABCBE8;
 }
 .container {
-    -webkit-app-region: drag;
     height: 100%;
     width: 100%;
     position: absolute;
@@ -126,7 +125,6 @@ polyline{
     margin-right: 0px;
     font-weight: bold;
     cursor: pointer;
-    -webkit-app-region: no-drag;
 }
 .btn:hover {
     background-color: #626465;
@@ -148,6 +146,7 @@ polyline{
     line-height: 10px;
     top: 5px;
     padding: 0 3px 2px 3px;
+    -webkit-app-region: no-drag;
 }
 
 .close {
