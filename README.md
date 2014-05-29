@@ -1,6 +1,6 @@
 OpenFin Hello World
 ============
-
+[![Build Status](https://travis-ci.org/openfin/HelloOpenFin.svg?branch=master)](https://travis-ci.org/openfin/HelloOpenFin)
 
 This is OpenFin's version of hello world, showcasing just a few features of the [OpenFin](http://openfin.co/) Runtime.
 
