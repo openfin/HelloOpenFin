@@ -8,7 +8,7 @@
             var mainWindow = fin.desktop.Window.getCurrent(),
                 draggableArea = document.querySelector('.container'),
                 //start the cpu window in a hidded state
-                cpuWindow = WindowFactory.create({
+                cpuWindow = windowFactory.create({
                     "name": "cpuChild",
                     "url": 'views/cpu.html',
                 });
@@ -109,22 +109,28 @@
             //     mainWindow,
             //     cpuWindow
             // }
-            var destination = {
+            var mainWindowDestination = {
                 top: 0,
                 left: 0,
                 duration: 1000
             };
 
-            //check the position and adjust the destination.
-            if (options.mainWindowBounds.top === destination.top && options.mainWindowBounds.left === destination.left) {
-                destination.top = options.monitorInfo.primaryMonitor.availableRect.bottom - options.mainWindowBounds.height;
-                destination.left = options.monitorInfo.primaryMonitor.availableRect.right - options.mainWindowBounds.width;
+            var cpuWindowDestination = {
+                top: 0,
+                left: 0,
+                duration: 1000
+            };
+
+            //check the position and adjust the mainWindowDestination.
+            if (options.mainWindowBounds.top === destination.top && options.mainWindowBounds.left === mainWindowDestination.left) {
+                mainWindowDestination.top = options.monitorInfo.primaryMonitor.availableRect.bottom - options.mainWindowBounds.height;
+                mainWindowDestination.left = options.monitorInfo.primaryMonitor.availableRect.right - options.mainWindowBounds.width;
             }
 
             //animate the main window.
             options.mainWindow.animate({
                     opacity: utils.transparentOpacityAnimation,
-                    position: destination
+                    position: mainWindowDestination
                 }, {
                     interrupt: true
                 },
@@ -135,15 +141,15 @@
                 });
 
             //update destination for the cpuWindow.
-            if (destination.left < options.mainWindowBounds.width) {
-                destination.left += (options.mainWindowBounds.width + utils.cpuWindowMargin);
+            if (cpuWindowDestination.left < options.mainWindowBounds.width) {
+                cpuWindowDestination.left += (options.mainWindowBounds.width + utils.cpuWindowMargin);
             } else {
-                destination.left -= (options.cpuWindowBounds.width + utils.cpuWindowMargin);
+                cpuWindowDestination.left -= (options.cpuWindowBounds.width + utils.cpuWindowMargin);
             }
             //animate the cpu child window.
             options.cpuWindow.animate({
                 opacity: utils.transparentOpacityAnimation,
-                position: destination
+                position: cpuWindowDestination
             }, {
                 interrupt: true
             }, function(evt) {
