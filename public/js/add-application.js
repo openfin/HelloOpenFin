@@ -5,7 +5,7 @@
             minimizeButton = document.getElementById('minimize-window'),
             generateJsonButton = document.getElementById('generate-json'),
             createInstallerButton = document.getElementById('create-installer'),
-            formElements = document.querySelector('.center-form').querySelectorAll('input');
+            newAppForm = document.querySelector('#newAppForm');
 
         closeButton.addEventListener('click', function() {
             mainWindow.hide();
@@ -15,31 +15,24 @@
             mainWindow.minimize();
         });
         generateJsonButton.addEventListener('click', function(e) {
-            generateJson(mainWindow, formElements, e);
+            generateJson(mainWindow, newAppForm, e);
         });
         createInstallerButton.addEventListener('click', function() {
             createInstaller(mainWindow);
         });
     };
 
-    var generateJson = function(mainWindow, formElements, event) {
+    var generateJson = function(mainWindow, newAppForm, event) {
         var appName,
             appUrl,
-            iconUrl,
-            formElement;
+            iconUrl;
 
-        for (var i = 0; i < formElements.length; i++) {
-            formElement = formElements[i];
-            if (!formElements[i].checkValidity()) {
-                return;
-            }
-            if (formElement.id === 'appName') {
-                appName = formElement.value;
-            } else if (formElement.id === 'startURL') {
-                appUrl = formElement.value;
-            } else if (formElement.id === 'iconUrl') {
-                iconUrl = formElement.value;
-            }
+        if (!newAppForm.checkValidity()) {
+            return;
+        } else {
+            appName = newAppForm.querySelector('#appName').value;
+            appUrl = newAppForm.querySelector('#startURL').value;
+            iconUrl = newAppForm.querySelector('#iconUrl').value;
         }
         //grab the current set of configuration.
         fin.desktop.System.getConfig(function(config) {
@@ -61,7 +54,8 @@
         event.preventDefault();
     };
     var createInstaller = function(mainWindow) {
-        console.log('create installer');
+        //TODO:change to the actual url.
+        fin.desktop.System.openUrlWithBrowser('http://openfin.co/developers.html?url=developers/getting-started/first-look.html');
     };
     var saveObjectAsJson = function(obj) {
         var downloadLink = document.createElement('a'),
