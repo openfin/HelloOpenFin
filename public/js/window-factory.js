@@ -1,9 +1,9 @@
-var WindowFactory = WindowFactory || {},
+var windowFactory = windowFactory || {},
     utils = utils || {};
 (function() {
     'use strict';
 
-    WindowFactory.create = function(customConfig, callback) {
+    windowFactory.create = function(customConfig, callback) {
         var config = {
             "name": "ChildWindow",
             "defaultWidth": 525,
