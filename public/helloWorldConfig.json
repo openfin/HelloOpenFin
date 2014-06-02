@@ -1,16 +1,16 @@
 {
     "default_icon": "default_icon.png",
-    "desktop_controller_url": "https://demoappdirectory.openf.in/desktop/desktopcontroller/2.0.5/index.html",
-    "desktop_core_url": "https://demoappdirectory.openf.in/desktop/desktopcore/2.0.5/index.html",
+    "desktop_controller_url": "https://demoappdirectory.openf.in/desktop/desktopcontroller/2.0.6/index.html",
+    "desktop_core_url": "https://demoappdirectory.openf.in/desktop/desktopcore/2.0.6/index.html",
     "devtools_port": 9090,
-    "env": "2.0.5.65",
+    "env": "2.0.6.0",
     "logging": true,
     "manifest": {
         "company": "OpenFin",
         "description": "Hello Open Fin App.",
         "icon": "https://demoappdirectory.openf.in/desktop/config/apps/OpenFin/StartMenu/2.0.5.16/icon.ico",
         "name": "Hello OpenFin",
-        "runtime": "2.0.5.65",
+        "runtime": "2.0.6.0",
         "runtimeArgs": "",
         "source": "http://127.0.0.1:5000/helloWorld.config.json"
     },

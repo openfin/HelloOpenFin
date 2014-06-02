@@ -11,13 +11,22 @@
                 cpuWindow = WindowFactory.create({
                     "name": "cpuChild",
                     "url": 'views/cpu.html',
+                }),
+                addApplicationWindow;
+
+            fin.desktop.System.getConfig(function(config) {
+                addApplicationWindow = WindowFactory.create({
+                    name: 'addApplicationWindow',
+                    url: 'views/addapplication.html',
+                    defaultHeight: config.startup_app.defaultHeight,
+                    defaultWidth: config.startup_app.defaultWidth,
+                    maxWidth: config.startup_app.maxWidth,
+                    maxHeight: config.startup_app.maxHeight,
                 });
 
-            //set up window move effects.
-            //utils.registerDragHandler(mainWindow);
-
-            //register the event handlers.
-            setEventHandlers(mainWindow, cpuWindow);
+                //register the event handlers.
+                setEventHandlers(mainWindow, cpuWindow, addApplicationWindow);
+            });
 
             //set the drag animations.
             mainWindow.defineDraggableArea(draggableArea, function(data) {
@@ -41,13 +50,14 @@
         });
 
         //set event handlers for the different buttons.
-        var setEventHandlers = function(mainWindow, cpuWindow) {
+        var setEventHandlers = function(mainWindow, cpuWindow, addApplicationWindow) {
             //Buttons and components.
             var desktopNotificationButton = document.getElementById('desktop-notification'),
                 cpuInfoButton = document.getElementById('cpu-info'),
                 closeButton = document.getElementById('close-app'),
                 arrangeWindowsButton = document.getElementById('arrange-windows'),
-                minimizeButton = document.getElementById('minimize-window');
+                minimizeButton = document.getElementById('minimize-window'),
+                addApplicationButton = document.getElementById('add-app');
 
             //Close button event handler
             closeButton.addEventListener('click', function() {
@@ -76,6 +86,15 @@
                                 cpuWindow.show();
                             });
                         });
+                    }
+                });
+            });
+
+            //Add application button.
+            addApplicationButton.addEventListener('click', function() {
+                addApplicationWindow.isShowing(function(showing) {
+                    if (!showing) {
+                        addApplicationWindow.show();
                     }
                 });
             });
