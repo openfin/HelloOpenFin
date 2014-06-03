@@ -27,6 +27,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
         //set the drag animations.
         mainWindow.defineDraggableArea(draggableArea, function(data) {
+            if (data.reason !== "self") {
+                return;
+            }
             mainWindow.animate({
                 opacity: utils.transparentOpacityAnimation,
             }, {
@@ -36,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
             mainWindow.animate({
                 opacity: utils.solidOpacityAnimation
             }, {
-                interrupt: false
+                interrupt: true
             });
         }, function(err) {
             console.log(err);

@@ -1,7 +1,6 @@
 (function() {
     'use strict';
     document.addEventListener('DOMContentLoaded', function() {
-
         //OpenFin is ready.
         fin.desktop.main(function() {
             //request the windows.
@@ -15,7 +14,7 @@
                 addApplicationWindow;
 
             fin.desktop.System.getConfig(function(config) {
-                addApplicationWindow = WindowFactory.create({
+                addApplicationWindow = windowFactory.create({
                     name: 'addApplicationWindow',
                     url: 'views/addapplication.html',
                     defaultHeight: config.startup_app.defaultHeight,
@@ -30,6 +29,9 @@
 
             //set the drag animations.
             mainWindow.defineDraggableArea(draggableArea, function(data) {
+                if (data.reason !== "self") {
+                    return;
+                }
                 mainWindow.animate({
                     opacity: utils.transparentOpacityAnimation,
                 }, {
@@ -39,7 +41,7 @@
                 mainWindow.animate({
                     opacity: utils.solidOpacityAnimation
                 }, {
-                    interrupt: false
+                    interrupt: true
                 });
             }, function(err) {
                 console.log(err);
@@ -79,23 +81,19 @@
 
             //Cpu information button.
             cpuInfoButton.addEventListener('click', function() {
-                cpuWindow.isShowing(function(showing) {
-                    if (!showing) {
-                        mainWindow.getBounds(function(bounds) {
-                            cpuWindow.moveTo(bounds.left + bounds.width + utils.cpuWindowMargin, bounds.top, function() {
-                                cpuWindow.show();
-                            });
-                        });
-                    }
+                cpuWindow.isShowing(function(isShowing) {
+                    //if (!isShowing) {
+                    showWindow(cpuWindow, [mainWindow, addApplicationWindow]);
+                    //}
                 });
             });
 
             //Add application button.
             addApplicationButton.addEventListener('click', function() {
-                addApplicationWindow.isShowing(function(showing) {
-                    if (!showing) {
-                        addApplicationWindow.show();
-                    }
+                addApplicationWindow.isShowing(function(isShowing) {
+                    //if (!isShowing) {
+                    showWindow(addApplicationWindow, [mainWindow, cpuWindow]);
+                    //}
                 });
             });
 
@@ -103,77 +101,131 @@
             arrangeWindowsButton.addEventListener('click', function() {
                 //move them to the top left by default, if windows are there move to bottom right.
                 fin.desktop.System.getMonitorInfo(function(monitorInfo) {
-                    mainWindow.getBounds(function(mainWindowBounds) {
-                        cpuWindow.getBounds(function(cpuWindowBounds) {
-                            animateWindows({
-                                monitorInfo: monitorInfo,
-                                mainWindowBounds: mainWindowBounds,
-                                cpuWindowBounds: cpuWindowBounds,
-                                mainWindow: mainWindow,
-                                cpuWindow: cpuWindow
-                            });
-                        });
-                    });
+                    synchronizeWindowAnimation([mainWindow, cpuWindow, addApplicationWindow], monitorInfo, null);
                 });
             });
         };
 
-        //animates both windows.
-        var animateWindows = function(options) {
-            //expects an options object with the following shape:
-            // {
-            //     monitorInfo,
-            //     mainWindowBounds,
-            //     cpuWindowBounds,
-            //     mainWindow,
-            //     cpuWindow
-            // }
-            var mainWindowDestination = {
-                top: 0,
-                left: 0,
-                duration: 1000
-            };
+        var showWindow = function(windowToShow, relatedWindows) {
+            fin.desktop.System.getMonitorInfo(function(monitorInfo) {
+                positionWindows(windowToShow, relatedWindows, monitorInfo, null);
+            });
+        };
 
-            var cpuWindowDestination = {
-                top: 0,
-                left: 0,
-                duration: 1000
-            };
-
-            //check the position and adjust the mainWindowDestination.
-            if (options.mainWindowBounds.top === destination.top && options.mainWindowBounds.left === mainWindowDestination.left) {
-                mainWindowDestination.top = options.monitorInfo.primaryMonitor.availableRect.bottom - options.mainWindowBounds.height;
-                mainWindowDestination.left = options.monitorInfo.primaryMonitor.availableRect.right - options.mainWindowBounds.width;
-            }
-
-            //animate the main window.
-            options.mainWindow.animate({
-                    opacity: utils.transparentOpacityAnimation,
-                    position: mainWindowDestination
-                }, {
-                    interrupt: true
-                },
-                function(evt) {
-                    options.mainWindow.animate({
-                        opacity: utils.solidOpacityAnimation
+        var positionWindows = function(windowToShow, windowList, monitorInfo, previousWindowBounds) {
+            var currentWindow = windowList.shift(),
+                destination;
+            if (previousWindowBounds) {
+                destination = {
+                    top: previousWindowBounds.top,
+                    left: previousWindowBounds.left + previousWindowBounds.width + utils.cpuWindowMargin,
+                    duration: 200
+                };
+                if (!currentWindow) {
+                    windowToShow.animate({
+                        position: destination
+                    }, {
+                        interrupt: true
                     });
-                });
-
-            //update destination for the cpuWindow.
-            if (cpuWindowDestination.left < options.mainWindowBounds.width) {
-                cpuWindowDestination.left += (options.mainWindowBounds.width + utils.cpuWindowMargin);
-            } else {
-                cpuWindowDestination.left -= (options.cpuWindowBounds.width + utils.cpuWindowMargin);
+                    windowToShow.animate({
+                        position: destination
+                    }, {
+                        interrupt: true
+                    }, function() {
+                        windowToShow.show();
+                    });
+                    return;
+                } else {
+                    //arrange before we move.
+                    currentWindow.animate({
+                        position: destination,
+                    }, {
+                        interrupt: false
+                    });
+                }
             }
-            //animate the cpu child window.
-            options.cpuWindow.animate({
-                opacity: utils.transparentOpacityAnimation,
-                position: cpuWindowDestination
-            }, {
-                interrupt: true
-            }, function(evt) {
-                options.cpuWindow.animate({
-                    opacity: utils.solidOpacityAnimation
+            currentWindow.isShowing(function(isShowing) {
+                if (!isShowing) {
+                    positionWindows(windowToShow, windowList, monitorInfo, previousWindowBounds);
+                    return;
+                }
+                currentWindow.getBounds(function(currentWindowBounds) {
+                    if (destination) {
+                        currentWindowBounds.top = destination.top;
+                        currentWindowBounds.left = destination.left;
+                    }
+                    positionWindows(windowToShow, windowList, monitorInfo, currentWindowBounds);
+                });
+            });
+
+        };
+
+        //make sure the window animation happens for all windows seamingly at the same time
+        var synchronizeWindowAnimation = function(windowList, monitorInfo, previousWindowBounds) {
+            var currentWindow = windowList.shift();
+            if (!currentWindow) {
+                return;
+            }
+            animateWindow(currentWindow, monitorInfo, previousWindowBounds, function(currentWindowBounds) {
+                synchronizeWindowAnimation(windowList, monitorInfo, currentWindowBounds);
+            });
+        };
+
+        //animates a window in relation of the other windows.
+        var animateWindow = function(currentWindow, monitorInfo, previousWindowBounds, callback) {
+            var destination = {
+                top: 10,
+                left: 10,
+                duration: 1000
+            };
+
+            currentWindow.isShowing(function(isShowing) {
+                if (!isShowing) {
+                    //call the function with the previous window bounds instead of the current.
+                    callback(previousWindowBounds);
+                    return;
+                }
+
+                //the current window is showing so we will take it into consideration.
+                currentWindow.getBounds(function(bounds) {
+                    //first winow.
+                    if (!previousWindowBounds) {
+                        //check the position and adjust the mainWindowDestination.
+                        if (bounds.top === destination.top && bounds.left === destination.left) {
+                            destination.top = monitorInfo.primaryMonitor.availableRect.bottom - bounds.height;
+                            destination.left = monitorInfo.primaryMonitor.availableRect.right - bounds.width;
+                        }
+                    } else {
+                        //destination baseline is the previous window.
+                        destination.top = previousWindowBounds.top;
+                        destination.left = previousWindowBounds.left;
+
+                        if (previousWindowBounds.left < previousWindowBounds.width) {
+                            destination.left += previousWindowBounds.width + utils.cpuWindowMargin;
+                        } else {
+                            destination.left -= bounds.width + utils.cpuWindowMargin;
+                        }
+                    }
+
+                    //animate the main window.
+                    currentWindow.animate({
+                        opacity: utils.transparentOpacityAnimation,
+                        position: destination
+                    }, {
+                        interrupt: true
+                    }, function() {
+                        currentWindow.animate({
+                            opacity: utils.solidOpacityAnimation
+                        }, {
+                            interrupt: true
+                        });
+                    });
+
+                    //we modify the bounds before we move so that the next window in the animation has the final destination.
+                    bounds.top = destination.top;
+                    bounds.left = destination.left;
+                    //callback with the current windows bounds
+                    callback(bounds);
                 });
             });
         };
