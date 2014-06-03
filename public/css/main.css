@@ -211,19 +211,21 @@ polyline{
 }
 
 .text-box {
-    border: 1px solid #333434;
+    border: 0;
     color:#c6c8c8;
     background-color: #454646;
     border-radius: 4px;
     font-size: 12px;
     margin-bottom: 10px;
+    padding: 5px;
 }
 
 .text-box:focus {
-    border: 1px solid #333434;
-    color:#c6c8c8;
     background-color: #595b5b;
-    border-radius: 4px;
+    color: #fff;
+    border: 1px solid #0036ff;
+    box-shadow: 0 0 0 2px #6fb5f1;
+
 }
 .explanation {
     padding: 0 50px 0 50px;

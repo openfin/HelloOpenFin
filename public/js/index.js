@@ -33,49 +33,49 @@
             //show the main window now that we are ready.
             mainWindow.show();
         });
-
-        //set event handlers for the different buttons.
-        var setEventHandlers = function(mainWindow, cpuWindow, addApplicationWindow) {
-            //Buttons and components.
-            var desktopNotificationButton = document.getElementById('desktop-notification'),
-                cpuInfoButton = document.getElementById('cpu-info'),
-                closeButton = document.getElementById('close-app'),
-                arrangeWindowsButton = document.getElementById('arrange-windows'),
-                minimizeButton = document.getElementById('minimize-window'),
-                addApplicationButton = document.getElementById('add-app');
-
-            //Close button event handler
-            closeButton.addEventListener('click', function() {
-                mainWindow.close();
-            });
-
-            //Minimize button event handler
-            minimizeButton.addEventListener('click', function() {
-                mainWindow.minimize();
-            });
-
-            //Desktop notification event handler
-            desktopNotificationButton.addEventListener('click', function() {
-                var notification = new fin.desktop.Notification({
-                    url: '/views/notification.html',
-                    message: 'Notification from app'
-                });
-            });
-
-            //Cpu information button.
-            cpuInfoButton.addEventListener('click', function() {
-                animations.showWindow(cpuWindow, [mainWindow, addApplicationWindow]);
-            });
-
-            //Add application button.
-            addApplicationButton.addEventListener('click', function() {
-                animations.showWindow(addApplicationWindow, [mainWindow, cpuWindow]);
-            });
-
-            //Arrange windows in the desktop.
-            arrangeWindowsButton.addEventListener('click', function() {
-                animations.animateWindows([mainWindow, cpuWindow, addApplicationWindow]);
-            });
-        };
     });
+
+    //set event handlers for the different buttons.
+    var setEventHandlers = function(mainWindow, cpuWindow, addApplicationWindow) {
+        //Buttons and components.
+        var desktopNotificationButton = document.getElementById('desktop-notification'),
+            cpuInfoButton = document.getElementById('cpu-info'),
+            closeButton = document.getElementById('close-app'),
+            arrangeWindowsButton = document.getElementById('arrange-windows'),
+            minimizeButton = document.getElementById('minimize-window'),
+            addApplicationButton = document.getElementById('add-app');
+
+        //Close button event handler
+        closeButton.addEventListener('click', function() {
+            mainWindow.close();
+        });
+
+        //Minimize button event handler
+        minimizeButton.addEventListener('click', function() {
+            mainWindow.minimize();
+        });
+
+        //Desktop notification event handler
+        desktopNotificationButton.addEventListener('click', function() {
+            var notification = new fin.desktop.Notification({
+                url: '/views/notification.html',
+                message: 'Notification from app'
+            });
+        });
+
+        //Cpu information button.
+        cpuInfoButton.addEventListener('click', function() {
+            animations.showWindow(cpuWindow, [mainWindow, addApplicationWindow]);
+        });
+
+        //Add application button.
+        addApplicationButton.addEventListener('click', function() {
+            animations.showWindow(addApplicationWindow, [mainWindow, cpuWindow]);
+        });
+
+        //Arrange windows in the desktop.
+        arrangeWindowsButton.addEventListener('click', function() {
+            animations.animateWindows([mainWindow, cpuWindow, addApplicationWindow]);
+        });
+    };
 }());

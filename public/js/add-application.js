@@ -1,12 +1,28 @@
 (function() {
     'use strict';
-    var setEventEmmiters = function(mainWindow) {
-        var closeButton = document.getElementById('close-app'),
-            minimizeButton = document.getElementById('minimize-window'),
-            generateJsonButton = document.getElementById('generate-json'),
-            createInstallerButton = document.getElementById('create-installer'),
-            newAppForm = document.querySelector('#newAppForm');
+    var closeButton = document.getElementById('close-app'),
+        minimizeButton = document.getElementById('minimize-window'),
+        generateJsonButton = document.getElementById('generate-json'),
+        createInstallerButton = document.getElementById('create-installer'),
+        newAppForm = document.querySelector('#newAppForm'),
+        generateJsonButtonVisible = true;
 
+    document.addEventListener('DOMContentLoaded', function() {
+        fin.desktop.main(function() {
+            //request the window
+            var mainWindow = fin.desktop.Window.getCurrent(),
+                draggableArea = document.querySelector('.container');
+
+            //set event emiters.
+            setEventEmmiters(mainWindow);
+
+            //set the drag animations.
+            animations.defineDraggableArea(mainWindow, draggableArea);
+        });
+    });
+
+    //set event handlers for the different buttons.
+    var setEventEmmiters = function(mainWindow) {
         closeButton.addEventListener('click', function() {
             mainWindow.hide();
         });
@@ -17,9 +33,21 @@
         generateJsonButton.addEventListener('click', function(e) {
             generateJson(mainWindow, newAppForm, e);
         });
-        createInstallerButton.addEventListener('click', function() {
-            createInstaller(mainWindow);
+        createInstallerButton.addEventListener('click', function(e) {
+            createInstaller(mainWindow, e);
         });
+    };
+
+    var toggleActionButtonVisibility = function() {
+        if (generateJsonButtonVisible) {
+            createInstallerButton.style.display = '';
+            generateJsonButton.style.display = 'none';
+            generateJsonButtonVisible = false;
+        } else {
+            generateJsonButton.style.display = '';
+            createInstallerButton.style.display = 'none';
+            generateJsonButtonVisible = true;
+        }
     };
 
     var generateJson = function(mainWindow, newAppForm, event) {
@@ -50,13 +78,19 @@
             config.manifest.icon = iconUrl;
 
             saveObjectAsJson(config, appName, appUrl, iconUrl);
+            toggleActionButtonVisibility();
         });
         event.preventDefault();
     };
-    var createInstaller = function(mainWindow) {
+
+    var createInstaller = function(mainWindow, event) {
         //TODO:change to the actual url.
         fin.desktop.System.openUrlWithBrowser('http://openfin.co/developers.html?url=developers/getting-started/first-look.html');
+        toggleActionButtonVisibility();
+        event.preventDefault();
     };
+
+    //saves an javascript object to a json file.
     var saveObjectAsJson = function(obj) {
         var downloadLink = document.createElement('a'),
             json = JSON.stringify(obj),
@@ -69,18 +103,4 @@
         downloadLink.download = "start.json";
         downloadLink.click();
     };
-
-    document.addEventListener('DOMContentLoaded', function() {
-        fin.desktop.main(function() {
-            //request the window
-            var mainWindow = fin.desktop.Window.getCurrent(),
-                draggableArea = document.querySelector('.container');
-
-            //set event emiters.
-            setEventEmmiters(mainWindow);
-
-            //set the drag animations.
-            animations.defineDraggableArea(mainWindow, draggableArea);
-        });
-    });
 }());
