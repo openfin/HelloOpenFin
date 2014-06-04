@@ -108,35 +108,39 @@ var animations = animations || {};
                 if (!isShowing) {
                     //call the function with the previous window bounds instead of the current.
                     animateWindowLoop(previousWindowBounds);
-                } else {
-                    //the current window is showing so we will take it into consideration.
-                    currentWindow.getBounds(function(bounds) {
-                        //first winow.
-                        if (!previousWindowBounds) {
-                            //check the position and adjust the mainWindowDestination.
-                            if (bounds.top === destination.top && bounds.left === destination.left) {
-                                destination.top = monitorInfo.primaryMonitor.availableRect.bottom - bounds.height;
-                                destination.left = monitorInfo.primaryMonitor.availableRect.right - bounds.width;
-                            }
-                        } else {
-                            //destination baseline is the previous window.
-                            destination.top = previousWindowBounds.top;
-                            destination.left = previousWindowBounds.left;
-
-                            if (previousWindowBounds.left < previousWindowBounds.width) {
-                                destination.left += previousWindowBounds.width + windowMargin;
-                            } else {
-                                destination.left -= bounds.width + windowMargin;
-                            }
-                        }
-
-                        //animate the main window.
-                        animateToDestination(currentWindow, destination, true, function() {});
-
-                        //callback with the current windows bounds
-                        animateWindowLoop(bounds);
-                    });
+                    return;
                 }
+
+                //the current window is showing so we will take it into consideration.
+                currentWindow.getBounds(function(bounds) {
+                    //first winow.
+                    if (!previousWindowBounds) {
+                        //check the position and adjust the mainWindowDestination.
+                        if (bounds.top === destination.top && bounds.left === destination.left) {
+                            destination.top = monitorInfo.primaryMonitor.availableRect.bottom - bounds.height;
+                            destination.left = monitorInfo.primaryMonitor.availableRect.right - bounds.width;
+                        }
+                    } else {
+                        //destination baseline is the previous window.
+                        destination.top = previousWindowBounds.top;
+                        destination.left = previousWindowBounds.left;
+
+                        if (previousWindowBounds.left < previousWindowBounds.width) {
+                            destination.left += previousWindowBounds.width + windowMargin;
+                        } else {
+                            destination.left -= bounds.width + windowMargin;
+                        }
+                    }
+
+                    //animate the main window.
+                    animateToDestination(currentWindow, destination, true, function() {});
+
+                    //we modify the bounds before we move so that the next window in the animation has the final destination.
+                    bounds.top = destination.top;
+                    bounds.left = destination.left;
+                    //callback with the current windows bounds
+                    animateWindowLoop(bounds);
+                });
             });
         };
     };
