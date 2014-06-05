@@ -12,7 +12,7 @@
         "name": "Hello OpenFin",
         "runtime": "2.0.6.0",
         "runtimeArgs": "",
-        "source": "http://127.0.0.1:5000/helloWorld.config.json"
+        "source": "http://127.0.0.1:5000/helloWorldConfig.json"
     },
     "startup_app": {
         "applicationIcon": "https://demoappdirectory.openf.in/desktop/config/apps/OpenFin/StartMenu/2.0.5.16/icon.png",
