@@ -7,7 +7,6 @@
         createInstallerButton = document.getElementById('create-installer'),
         newAppForm = document.querySelector('#newAppForm'),
         generateJsonButtonVisible = true,
-        validateNow = false; //for ease of development, should be set to true for production
 
     document.addEventListener('DOMContentLoaded', function() {
         fin.desktop.main(function() {
@@ -63,7 +62,7 @@
             appUrl,
             iconUrl;
 
-        if (!newAppForm.checkValidity() && validateNow) {
+        if (!newAppForm.checkValidity()) {
             return;
         } else {
             appName = newAppForm.querySelector('#appName').value;
@@ -92,7 +91,7 @@
             appUrl,
             iconUrl;
 
-        if (!newAppForm.checkValidity() && validateNow) {
+        if (!newAppForm.checkValidity()) {
             return;
         } else {
             appName = newAppForm.querySelector('#appName').value;
