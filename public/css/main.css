@@ -14,6 +14,7 @@ html {
     color: #222;
     font-size: 1em;
     line-height: 1.4;
+    color:#4F8ABA;
 }
 
 /*
@@ -133,11 +134,13 @@ polyline{
     border: 1px solid #333434;
     background-color: #3f4041;
     box-shadow: inset 0 1px rgba(0,0,0,0.05);
+    background-color: #595b5b;
 }
 .btn:focus {
     border: 1px solid #0036ff;
     box-shadow: inset 0 1px rgba(255,255,255,0.36), 0 0 0 2px #6fb5f1;
     outline: 0;
+    background-color: #595b5b;
 }
 .top-btn {
     position: absolute;
@@ -185,6 +188,50 @@ polyline{
     margin-right: auto;
 }
 
+.center-form {
+    padding: 5px 50px 50px 50px;
+    text-align: left;
+
+}
+
+.center-form button {
+    display: block;
+}
+
+.center-form label {
+    padding-bottom: 5px;
+}
+.center-form input {
+    display: block;
+}
+
+.center-form .text-box {
+    width: 290px;
+    padding: 3px;
+}
+
+.text-box {
+    border: 0;
+    color:#c6c8c8;
+    background-color: #454646;
+    border-radius: 4px;
+    font-size: 12px;
+    margin-bottom: 10px;
+    padding: 5px;
+}
+
+.text-box:focus {
+    background-color: #595b5b;
+    color: #fff;
+    border: 1px solid #0036ff;
+    box-shadow: 0 0 0 2px #6fb5f1;
+
+}
+.explanation {
+    padding: 0 50px 0 50px;
+    text-align: left;
+    color:#F0F1F1;
+}
 /****************************************
 * styles for cpu window ****************/
 
