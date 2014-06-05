@@ -6,7 +6,7 @@
         generateApplicationJsonButton = document.getElementById('generate-application-json'),
         createInstallerButton = document.getElementById('create-installer'),
         newAppForm = document.querySelector('#newAppForm'),
-        generateJsonButtonVisible = true,
+        generateJsonButtonVisible = true;
 
     document.addEventListener('DOMContentLoaded', function() {
         fin.desktop.main(function() {
