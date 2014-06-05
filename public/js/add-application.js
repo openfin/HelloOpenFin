@@ -102,8 +102,8 @@
         fin.desktop.System.getConfig(function(config) {
 
             var aConfig = {
-                "desktop_controller_url": "https://openf.in/desktop/desktopcontroller",
-                "desktop_core_url": "https://openf.in/desktop/desktopcore/",
+                "desktop_controller_url": config.desktop_controller_url,
+                "desktop_core_url": config.desktop_core_url,
                 "env": appName + "CacheFolder",
                 "startup_app": {
                     "name": appName,
