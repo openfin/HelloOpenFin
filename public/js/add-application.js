@@ -2,7 +2,8 @@
     'use strict';
     var closeButton = document.getElementById('close-app'),
         minimizeButton = document.getElementById('minimize-window'),
-        generateJsonButton = document.getElementById('generate-json'),
+        generateRVMJsonButton = document.getElementById('generate-rvm-json'),
+        generateApplicationJsonButton = document.getElementById('generate-application-json'),
         createInstallerButton = document.getElementById('create-installer'),
         newAppForm = document.querySelector('#newAppForm'),
         generateJsonButtonVisible = true;
@@ -30,27 +31,33 @@
         minimizeButton.addEventListener('click', function() {
             mainWindow.minimize();
         });
-        generateJsonButton.addEventListener('click', function(e) {
-            generateJson(mainWindow, newAppForm, e);
+        generateRVMJsonButton.addEventListener('click', function(e) {
+            generateRVMJson(mainWindow, newAppForm, e);
+        });
+        generateApplicationJsonButton.addEventListener('click', function(e) {
+            generateApplicationJson(mainWindow, newAppForm, e);
         });
         createInstallerButton.addEventListener('click', function(e) {
             createInstaller(mainWindow, e);
         });
     };
 
-    var toggleActionButtonVisibility = function() {
-        if (generateJsonButtonVisible) {
-            createInstallerButton.style.display = '';
-            generateJsonButton.style.display = 'none';
-            generateJsonButtonVisible = false;
-        } else {
-            generateJsonButton.style.display = '';
+    var adjustButtonVisibility = function() {
+        if (generateRVMJsonButton.style.display === '') {
+            generateRVMJsonButton.style.display = 'none';
+            generateApplicationJsonButton.style.display = '';
             createInstallerButton.style.display = 'none';
-            generateJsonButtonVisible = true;
+        } else if (generateApplicationJsonButton.style.display === '') {
+            generateRVMJsonButton.style.display = 'none';
+            generateApplicationJsonButton.style.display = 'none';
+            createInstallerButton.style.display = '';
+        } else {
+            generateRVMJsonButton.style.display = '';
+            generateApplicationJsonButton.style.display = 'none';
+            createInstallerButton.style.display = 'none';
         }
     };
-
-    var generateJson = function(mainWindow, newAppForm, event) {
+    var generateRVMJson = function(mainWindow, newAppForm, event) {
         var appName,
             appUrl,
             iconUrl;
@@ -64,21 +71,48 @@
         }
         //grab the current set of configuration.
         fin.desktop.System.getConfig(function(config) {
-            //edit the startup app info
-            config.startup_app.name = appName;
-            config.startup_app.url = appUrl;
-            config.startup_app.uuid = appName;
-            config.startup_app.frame = true;
-            config.startup_app.applicationIcon = iconUrl;
-            config.startup_app.autoShow = true;
+            var aConfig = {
+                "company": appName,
+                "description": appName,
+                "icon": iconUrl,
+                "name": appName,
+                "runtime": config.env,
+                "runtimeArgs": "",
+                "appConfig": appUrl + "/start.json"
+            };
+            saveObjectAsJson(aConfig, "manifest.json");
+            adjustButtonVisibility();
+        });
+        event.preventDefault();
+    };
 
-            //edit the manifest app info.
-            config.manifest.description = appName;
-            config.manifest.name = appName;
-            config.manifest.icon = iconUrl;
+    var generateApplicationJson = function(mainWindow, newAppForm, event) {
+        var appName,
+            appUrl,
+            iconUrl;
 
-            saveObjectAsJson(config, appName, appUrl, iconUrl);
-            toggleActionButtonVisibility();
+        if (!newAppForm.checkValidity()) {
+            return;
+        } else {
+            appName = newAppForm.querySelector('#appName').value;
+            appUrl = newAppForm.querySelector('#startURL').value;
+            iconUrl = newAppForm.querySelector('#iconUrl').value;
+        }
+        //grab the current set of configuration.
+        fin.desktop.System.getConfig(function(config) {
+
+            var aConfig = {
+                "desktop_controller_url": config.desktop_controller_url,
+                "desktop_core_url": config.desktop_core_url,
+                "env": appName + "CacheFolder",
+                "startup_app": {
+                    "name": appName,
+                    "url": appUrl, //or wherever you application is hosted
+                    "uuid": appUrl + "UUID"
+                }
+            };
+            saveObjectAsJson(aConfig, "start.json");
+            adjustButtonVisibility();
         });
         event.preventDefault();
     };
@@ -86,21 +120,21 @@
     var createInstaller = function(mainWindow, event) {
         //TODO:change to the actual url.
         fin.desktop.System.openUrlWithBrowser('http://openfin.co/developers.html?url=developers/getting-started/first-look.html');
-        toggleActionButtonVisibility();
+        adjustButtonVisibility();
         event.preventDefault();
     };
 
     //saves an javascript object to a json file.
-    var saveObjectAsJson = function(obj) {
+    var saveObjectAsJson = function(obj, filename) {
         var downloadLink = document.createElement('a'),
-            json = JSON.stringify(obj),
+            json = JSON.stringify(obj, undefined, 4),
             dataBlob = new Blob([json], {
                 type: "octet/stream"
             }),
             blobUrl = URL.createObjectURL(dataBlob);
 
         downloadLink.href = blobUrl;
-        downloadLink.download = "start.json";
+        downloadLink.download = filename;
         downloadLink.click();
     };
 }());

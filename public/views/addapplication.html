@@ -20,7 +20,7 @@
             </div>
             <p class="explanation">
                 We will now go through the steps of creating an OpenFin launcher for a web application of your choosing,
-                the first step is to provide the information below and download the JSON file generated.
+                the first step is to provide the information below and download both the Manifest and Start JSON files.
             </p>
             <form role="form" id="newAppForm">
                 <div class="center-form">
@@ -32,7 +32,8 @@
                     <input type="url" required class="text-box" id="iconUrl" placeholder="http://localhost:5000/icon.ico" />
                 </div>
                 <div class="menu-buttons">
-                    <button class="btn" style="" id="generate-json">Generate JSON</button>
+                    <button class="btn" style="" id="generate-rvm-json">create manifest.json</button>
+                    <button class="btn" style="display:none;" id="generate-application-json">create start.json</button>
                     <button class="btn" style="display:none;" id="create-installer">Next Steps</button>
                 </div>
             </form>
