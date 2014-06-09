@@ -10,9 +10,9 @@
     document.addEventListener('DOMContentLoaded', function() {
         closeButton = document.getElementById('close-app');
         minimizeButton = document.getElementById('minimize-window');
-        draggableArea = document.querySelector('.container'),
-        githubLink = document.getElementById('githubLink'),
-        openFinApiLink = document.getElementById('openFinApiLink'),
+        draggableArea = document.querySelector('.container');
+        githubLink = document.getElementById('githubLink');
+        openFinApiLink = document.getElementById('openFinApiLink');
         appGalleryLink = document.getElementById('appGalleryLink');
 
         fin.desktop.main(function() {
@@ -36,15 +36,15 @@
             mainWindow.minimize();
         });
 
-        githubLink.addEventListener('click', function () {
+        githubLink.addEventListener('click', function() {
             fin.desktop.System.openUrlWithBrowser('https://github.com/openfin/HelloOpenFin');
         });
 
-        openFinApiLink.addEventListener('click', function () {
+        openFinApiLink.addEventListener('click', function() {
             fin.desktop.System.openUrlWithBrowser('http://openfin.co/developers.html?url=developers/getting-started/first-look.html');
         });
 
-        appGalleryLink.addEventListener('click', function () {
+        appGalleryLink.addEventListener('click', function() {
             fin.desktop.System.openUrlWithBrowser('http://openfin.co/app-gallery.html');
         });
     };

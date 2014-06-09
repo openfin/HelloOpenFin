@@ -12,7 +12,7 @@
             //request the windows.
             mainWindow = fin.desktop.Window.getCurrent();
             draggableArea = document.querySelector('.container');
-                //start the cpu window in a hidded state
+            //start the cpu window in a hidded state
             cpuWindow = windowFactory.create({
                 "name": "cpuChild",
                 "url": 'views/cpu.html',
@@ -35,7 +35,7 @@
                     defaultWidth: config.startup_app.defaultWidth,
                     maxWidth: config.startup_app.maxWidth,
                     maxHeight: config.startup_app.maxHeight
-                }, function () {
+                }, function() {
                     animations.showWindow(aboutWindow, [mainWindow, addApplicationWindow, cpuWindow]);
                 });
                 //register the event handlers.
@@ -89,7 +89,7 @@
             animations.showWindow(addApplicationWindow, [mainWindow, cpuWindow, aboutWindow]);
         });
 
-        aboutButton.addEventListener('click', function () {
+        aboutButton.addEventListener('click', function() {
             animations.showWindow(aboutWindow, [mainWindow, addApplicationWindow, cpuWindow]);
         });
 

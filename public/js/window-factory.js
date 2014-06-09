@@ -11,7 +11,7 @@ var windowFactory = windowFactory || {},
             "maxWidth": 525,
             "maxHeight": 395,
             "autoShow": false,
-            "maximizable" : false,
+            "maximizable": false,
             "url": 'about:blank',
             "cornerRounding": {
                 "width": 5,
