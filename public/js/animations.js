@@ -13,7 +13,7 @@ var animations = animations || {};
             //time in ms.
             duration: transitionDuration
         },
-        windowMargin = 10;
+        windowMargin = 5;
 
     //animate a window given a destination.
     var animateToDestination = function(ofinWindow, destination, useTransparency, onFinished) {
@@ -90,10 +90,11 @@ var animations = animations || {};
     animations.animateWindows = function(windowList) {
         var monitorInfo,
             destination = {
-                top: 10,
-                left: 10,
+                top: 5,
+                left: 5,
                 duration: 1000
-            };
+            },
+            directionTop = true;
         //obtain the monitor information.
         fin.desktop.System.getMonitorInfo(function(monitor) {
             monitorInfo = monitor;
@@ -117,6 +118,8 @@ var animations = animations || {};
                     if (!previousWindowBounds) {
                         //check the position and adjust the mainWindowDestination.
                         if (bounds.top === destination.top && bounds.left === destination.left) {
+                            //determine what direction we are moving.
+                            directionTop = false;
                             destination.top = monitorInfo.primaryMonitor.availableRect.bottom - bounds.height;
                             destination.left = monitorInfo.primaryMonitor.availableRect.right - bounds.width;
                         }
@@ -125,11 +128,17 @@ var animations = animations || {};
                         destination.top = previousWindowBounds.top;
                         destination.left = previousWindowBounds.left;
 
-                        if (previousWindowBounds.left < previousWindowBounds.width) {
+                        //based on the direction we will animate in a different way.
+                        if (directionTop) {
                             destination.left += previousWindowBounds.width + windowMargin;
                         } else {
-                            destination.left -= bounds.width + windowMargin;
+                            destination.left -= (bounds.width + windowMargin);
                         }
+                    }
+
+                    //ensure that windows that trail off the screen are hidden.
+                    if (destination.left + bounds.width > monitorInfo.primaryMonitor.availableRect.right || destination.left < 0) {
+                        currentWindow.hide();
                     }
 
                     //animate the main window.
@@ -146,6 +155,8 @@ var animations = animations || {};
     };
     //defines a draggable area for a given openfin window.
     animations.defineDraggableArea = function(ofinWindow, draggableArea) {
+        console.log(ofinWindow);
+        console.log(draggableArea);
         ofinWindow.defineDraggableArea(draggableArea, function(data) {
             if (data.reason !== "self") {
                 return;
