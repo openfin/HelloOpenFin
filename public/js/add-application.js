@@ -90,6 +90,7 @@
             var startConfig = generateStartJsonObject(appName, appUrl, iconUrl, config);
             saveObjectAsJson(startConfig, "start.json");
             toggleActionButtonVisibility();
+            createInstallerButton.focus();
         });
         event.preventDefault();
     };

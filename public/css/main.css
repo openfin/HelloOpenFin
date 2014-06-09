@@ -78,6 +78,14 @@ body:active {
 h1,h2,h3 {
     color:#ABCBE8;
 }
+a {
+    color: #adcfed;
+    text-decoration: none;
+    -webkit-app-region: no-drag;
+}
+a:hover {
+    text-decoration: underline;
+}
 .container {
     height: 100%;
     width: 100%;
@@ -148,7 +156,7 @@ polyline{
     margin: 0px;
     line-height: 10px;
     top: 5px;
-    padding: 0 3px 2px 3px;
+    padding: 1px 4px 3px 4px;
     -webkit-app-region: no-drag;
 }
 
@@ -163,6 +171,9 @@ polyline{
 }
 .cpu-minimize {
    left: 480px;
+}
+.about {
+    left: 330px;
 }
 .minimize-bar {
     background: #2D2D2D;
@@ -189,7 +200,7 @@ polyline{
 }
 
 .center-form {
-    padding: 5px 50px 50px 50px;
+    padding: 5px 50px 35px 50px;
     text-align: left;
 
 }
@@ -231,6 +242,13 @@ polyline{
     padding: 0 50px 0 50px;
     text-align: left;
     color:#F0F1F1;
+}
+
+.copyright-info {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    padding-bottom: 45px;
 }
 /****************************************
 * styles for cpu window ****************/
