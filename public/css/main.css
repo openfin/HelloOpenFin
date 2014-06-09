@@ -81,6 +81,7 @@ h1,h2,h3 {
 a {
     color: #adcfed;
     text-decoration: none;
+    -webkit-app-region: no-drag;
 }
 a:hover {
     text-decoration: underline;
