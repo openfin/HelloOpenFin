@@ -74,7 +74,7 @@
         //Desktop notification event handler
         desktopNotificationButton.addEventListener('click', function() {
             var notification = new fin.desktop.Notification({
-                url: '/views/notification.html',
+                url: 'views/notification.html',
                 message: 'Notification from app'
             });
         });
