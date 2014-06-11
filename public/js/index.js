@@ -5,7 +5,13 @@
         //start the cpu window in a hidded state
         cpuWindow,
         addApplicationWindow,
-        aboutWindow;
+        aboutWindow,
+        defaultWindowConfig = {
+            defaultHeight: 525,
+            defaultWidth: 395,
+            maxWidth: 395,
+            maxHeight: 525,
+        };
     document.addEventListener('DOMContentLoaded', function() {
         //OpenFin is ready.
         fin.desktop.main(function() {
@@ -18,29 +24,19 @@
                 "url": 'views/cpu.html',
             });
 
-            fin.desktop.System.getConfig(function(config) {
-                addApplicationWindow = windowFactory.create({
-                    name: 'addApplicationWindow',
-                    url: 'views/addapplication.html',
-                    defaultHeight: config.startup_app.defaultHeight,
-                    defaultWidth: config.startup_app.defaultWidth,
-                    maxWidth: config.startup_app.maxWidth,
-                    maxHeight: config.startup_app.maxHeight,
-                });
+            addApplicationWindow = windowFactory.create(utils.extend(defaultWindowConfig, {
+                name: 'addApplicationWindow',
+                url: 'views/addapplication.html'
+            }));
 
-                aboutWindow = windowFactory.create({
-                    name: 'aboutWindow',
-                    url: 'views/about.html',
-                    defaultHeight: config.startup_app.defaultHeight,
-                    defaultWidth: config.startup_app.defaultWidth,
-                    maxWidth: config.startup_app.maxWidth,
-                    maxHeight: config.startup_app.maxHeight
-                }, function() {
-                    animations.showWindow(aboutWindow, [mainWindow, addApplicationWindow, cpuWindow]);
-                });
-                //register the event handlers.
-                setEventHandlers();
-            });
+            aboutWindow = windowFactory.create(utils.extend(defaultWindowConfig, {
+                name: 'aboutWindow',
+                url: 'views/about.html'
+            }, function() {
+                animations.showWindow(aboutWindow, [mainWindow, addApplicationWindow, cpuWindow]);
+            }));
+            //register the event handlers.
+            setEventHandlers();
 
             //set the drag animations.
             animations.defineDraggableArea(mainWindow, draggableArea);
