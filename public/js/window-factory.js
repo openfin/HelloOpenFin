@@ -12,13 +12,13 @@ var windowFactory = windowFactory || {},
             "maxHeight": 395,
             "autoShow": false,
             "maximizable": false,
+            "resizable": false,
+            "frame": false,
             "url": 'about:blank',
             "cornerRounding": {
                 "width": 5,
                 "height": 5
-            },
-            "frame": false,
-            "resizable": false
+            }
         };
 
         customConfig = customConfig || {};
