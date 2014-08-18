@@ -1,7 +1,7 @@
 {
-  "env": "2.0.6.2",
-  "desktop_core_url": "https://demoappdirectory.openf.in/desktop/desktopcore/2.0.6/index.html",
-  "desktop_controller_url": "https://demoappdirectory.openf.in/desktop/desktopcontroller/2.0.6/index.html",
+  "env": "2.0.7.0",
+  "desktop_core_url": "https://demoappdirectory.openf.in/desktop/desktopcore/2.0.7/index.html",
+  "desktop_controller_url": "https://demoappdirectory.openf.in/desktop/desktopcontroller/2.0.7/index.html",
   "devtools_port" : 9090,
   "startup_app": {
     "name": "Hello Open Fin",
