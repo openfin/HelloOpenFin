@@ -48,7 +48,7 @@
         }
     };
 
-    var generateStartJsonObject = function(appName, url, iconUrl, config) {
+    var generateStartJsonObject = function(appName, url, config) {
         return {
             env: config.env,
             desktop_core_url: config.desktop_core_url,
@@ -58,7 +58,7 @@
                 name: appName,
                 url: url,
                 uuid: appName,
-                applicationIcon: iconUrl,
+                applicationIcon: config.startup_app.applicationIcon,
             },
             runtime: {
                 arguments: "",
@@ -67,7 +67,7 @@
             shortcut: {
                 company: appName,
                 description: appName,
-                icon: iconUrl,
+                icon: config.shortcut.icon,
                 name: appName
             }
         };
@@ -75,20 +75,18 @@
 
     var generateApplicationJson = function(mainWindow, newAppForm, event) {
         var appName,
-            appUrl,
-            iconUrl;
+            appUrl;
         if (!newAppForm.checkValidity()) {
             return;
         } else {
             appName = newAppForm.querySelector('#appName').value;
             appUrl = newAppForm.querySelector('#startURL').value;
-            iconUrl = newAppForm.querySelector('#iconUrl').value;
         }
         //grab the current set of configuration.
         fin.desktop.System.getConfig(function(config) {
 
-            var startConfig = generateStartJsonObject(appName, appUrl, iconUrl, config);
-            saveObjectAsJson(startConfig, "start.json");
+            var startConfig = generateStartJsonObject(appName, appUrl, config);
+            saveObjectAsJson(startConfig, "app.json");
             toggleActionButtonVisibility();
             createInstallerButton.focus();
         });

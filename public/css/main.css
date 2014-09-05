@@ -263,3 +263,8 @@ polyline{
 .y, .x, .legend{
     fill : #fff;
   }
+
+/**** Styles for the add application ****/
+#newAppForm .menu-buttons {
+    margin-top: 9%;
+}

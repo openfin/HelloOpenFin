@@ -20,7 +20,8 @@
             </div>
             <p class="explanation">
                 We will now go through the steps of creating an OpenFin launcher for a web application of your choosing,
-                the first step is to provide the information below and download both the Manifest and Start JSON files.
+                the first step is to provide a name and URL,
+                this process will generate an app.json file that will be used to create a launcher and configure the OpenFin container.
             </p>
             <form role="form" id="newAppForm">
                 <div class="center-form">
@@ -28,11 +29,9 @@
                     <input type="text" required class="text-box" placeholder="New app name" id="appName"  />
                     <label for="startUrl">URL</label>
                     <input type="url" required class="text-box" placeholder="http://localhost:5000" id="startURL" />
-                    <label for="iconUrl">Icon URL</label>
-                    <input type="url" required class="text-box" id="iconUrl" placeholder="http://localhost:5000/icon.ico" />
                 </div>
                 <div class="menu-buttons">
-                    <button class="btn" id="generate-application-json">create start.json</button>
+                    <button class="btn" id="generate-application-json">Create app.json</button>
                     <button class="btn" style="display:none;" id="create-installer">Next Steps</button>
                 </div>
             </form>
