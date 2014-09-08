@@ -1,26 +1,53 @@
 /* jshint node: true*/
 'use strict';
 module.exports = function(grunt) {
-    var files = [
+    var jsFiles = [
         'gruntfile.js',
         'public/**/*.js',
         'package.json',
-        'server.js'
+        'server.js',
+        'app.json'
     ];
 
     grunt.initConfig({
         watch: {
-            files: files,
-            tasks: ['default']
+            js: {
+                files: jsFiles,
+                tasks: ['default'],
+                options: {
+                    livereload: true
+                }
+            },
+            html: {
+                files: [
+                    'public/**/*.css',
+                    'public/**/*.html'
+                ],
+                options: {
+                    livereload: true
+                }
+            },
+            livereload: {
+                options: {
+                    open: true,
+                    base: [
+                        'public'
+                    ]
+                },
+                files: [
+                    'public/**/*.css',
+                    'public/*.html'
+                ]
+            }
         },
         jshint: {
-            files: files,
+            jsFiles: jsFiles,
             options: {
                 node: false
             }
         },
         jsbeautifier: {
-            files: files,
+            jsFiles: jsFiles,
             options: {
                 js: {
                     braceStyle: "collapse",
@@ -42,13 +69,32 @@ module.exports = function(grunt) {
                     wrapLineLength: 0
                 }
             }
+        },
+        connect: {
+            options: {
+                port: 5000,
+                // Change this to '0.0.0.0' to access the server from outside.
+                hostname: '0.0.0.0',
+                livereload: 35729
+            },
+            livereload: {
+                options: {
+                    open: true,
+                    base: [
+                        'public'
+                    ]
+                }
+            }
+
         }
     });
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-jsbeautifier');
+    grunt.loadNpmTasks('grunt-contrib-connect');
 
     grunt.registerTask('default', ['jshint', 'jsbeautifier']);
     grunt.registerTask('test', ['jshint', 'jsbeautifier']);
+    grunt.registerTask('serve', ['test', 'connect:livereload', 'watch']);
 
 };

@@ -5,7 +5,10 @@
         //start the cpu window in a hidded state
         cpuWindow,
         addApplicationWindow,
-        aboutWindow,
+        flipContainer,
+        githubLink,
+        openFinApiLink,
+        appGalleryLink,
         defaultWindowConfig = {
             defaultHeight: 525,
             defaultWidth: 395,
@@ -28,13 +31,6 @@
                 name: 'addApplicationWindow',
                 url: 'views/addapplication.html'
             }));
-
-            aboutWindow = windowFactory.create(utils.extend(defaultWindowConfig, {
-                name: 'aboutWindow',
-                url: 'views/about.html'
-            }, function() {
-                animations.showWindow(aboutWindow, [mainWindow, addApplicationWindow, cpuWindow]);
-            }));
             //register the event handlers.
             setEventHandlers();
 
@@ -46,6 +42,9 @@
         });
     });
 
+    var flipDisplay = function() {
+        flipContainer.classList.toggle("flip");
+    };
     //set event handlers for the different buttons.
     var setEventHandlers = function() {
         //Buttons and components.
@@ -56,6 +55,10 @@
             minimizeButton = document.getElementById('minimize-window'),
             addApplicationButton = document.getElementById('add-app'),
             aboutButton = document.getElementById('about-app');
+        flipContainer = document.querySelector('.two-sided-container');
+        githubLink = document.getElementById('githubLink');
+        openFinApiLink = document.getElementById('openFinApiLink');
+        appGalleryLink = document.getElementById('appGalleryLink');
 
         //Close button event handler
         closeButton.addEventListener('click', function() {
@@ -77,21 +80,36 @@
 
         //Cpu information button.
         cpuInfoButton.addEventListener('click', function() {
-            animations.showWindow(cpuWindow, [mainWindow, addApplicationWindow, aboutWindow]);
+            animations.showWindow(cpuWindow, [mainWindow, addApplicationWindow]);
         });
 
         //Add application button.
         addApplicationButton.addEventListener('click', function() {
-            animations.showWindow(addApplicationWindow, [mainWindow, cpuWindow, aboutWindow]);
+            animations.showWindow(addApplicationWindow, [mainWindow, cpuWindow]);
         });
 
         aboutButton.addEventListener('click', function() {
-            animations.showWindow(aboutWindow, [mainWindow, addApplicationWindow, cpuWindow]);
+            flipDisplay();
         });
 
         //Arrange windows in the desktop.
         arrangeWindowsButton.addEventListener('click', function() {
-            animations.animateWindows([mainWindow, cpuWindow, addApplicationWindow, aboutWindow]);
+            animations.animateWindows([mainWindow, cpuWindow, addApplicationWindow]);
+        });
+
+        //github link event handler
+        githubLink.addEventListener('click', function() {
+            fin.desktop.System.openUrlWithBrowser('https://github.com/openfin/HelloOpenFin');
+        });
+
+        //OpenFin api link event handler
+        openFinApiLink.addEventListener('click', function() {
+            fin.desktop.System.openUrlWithBrowser('http://openfin.co/developers.html?url=developers/getting-started/first-look.html');
+        });
+
+        //OpenFin App Gallery link event handler
+        appGalleryLink.addEventListener('click', function() {
+            fin.desktop.System.openUrlWithBrowser('http://openfin.co/app-gallery.html');
         });
     };
 }());
