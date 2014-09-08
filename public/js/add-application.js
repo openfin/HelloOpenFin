@@ -1,11 +1,14 @@
 (function() {
     'use strict';
-    var closeButton = document.getElementById('close-app'),
-        minimizeButton = document.getElementById('minimize-window'),
-        generateApplicationJsonButton = document.getElementById('generate-application-json'),
-        createInstallerButton = document.getElementById('create-installer'),
+    //get a hold of the elements we will interact with.
+    var closeButton = document.querySelector('#close-app'),
+        minimizeButton = document.querySelector('#minimize-window'),
+        generateApplicationJsonButton = document.querySelector('#generate-application-json'),
+        backButton = document.querySelector('#back-button'),
         newAppForm = document.querySelector('#newAppForm'),
-        generateJsonButtonVisible = true;
+        generateJsonButtonVisible = true,
+        deployappLinks = document.querySelectorAll('.deployappLink'),
+        flipContainer = document.querySelector('.two-sided-container');
 
     document.addEventListener('DOMContentLoaded', function() {
         fin.desktop.main(function() {
@@ -33,22 +36,19 @@
         generateApplicationJsonButton.addEventListener('click', function(e) {
             generateApplicationJson(mainWindow, newAppForm, e);
         });
-        createInstallerButton.addEventListener('click', function(e) {
-            createInstaller(mainWindow, e);
+        backButton.addEventListener('click', function(e) {
+            flipDisplay();
         });
-    };
-
-    var toggleActionButtonVisibility = function() {
-        if (generateApplicationJsonButton.style.display === '') {
-            generateApplicationJsonButton.style.display = 'none';
-            createInstallerButton.style.display = '';
-        } else {
-            createInstallerButton.style.display = 'none';
-            generateApplicationJsonButton.style.display = '';
+        for (var i = 0; i < deployappLinks.length; i++) {
+            deployappLinks[i].addEventListener('click', deployappLinkAction);
         }
     };
 
-    var generateStartJsonObject = function(appName, url, config) {
+    var flipDisplay = function() {
+        flipContainer.classList.toggle("flip");
+    };
+
+    var generateAppJsonObject = function(appName, url, config) {
         return {
             env: config.env,
             desktop_core_url: config.desktop_core_url,
@@ -84,19 +84,18 @@
         }
         //grab the current set of configuration.
         fin.desktop.System.getConfig(function(config) {
-
-            var startConfig = generateStartJsonObject(appName, appUrl, config);
-            saveObjectAsJson(startConfig, "app.json");
-            toggleActionButtonVisibility();
-            createInstallerButton.focus();
+            //generate a new app.json file
+            var startConfig = generateAppJsonObject(appName, appUrl, config);
+            flipDisplay();
+            setTimeout(function() {
+                saveObjectAsJson(startConfig, "app.json");
+            }, 700);
         });
         event.preventDefault();
     };
 
-    var createInstaller = function(mainWindow, event) {
+    var deployappLinkAction = function(mainWindow, event) {
         fin.desktop.System.openUrlWithBrowser('http://openfin.co/developers.html?url=developers/getting-started/deploy-app.html');
-        toggleActionButtonVisibility();
-        event.preventDefault();
     };
 
     //saves an
