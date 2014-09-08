@@ -6,7 +6,6 @@
         generateApplicationJsonButton = document.querySelector('#generate-application-json'),
         backButton = document.querySelector('#back-button'),
         newAppForm = document.querySelector('#newAppForm'),
-        generateJsonButtonVisible = true,
         deployappLinks = document.querySelectorAll('.deployappLink'),
         flipContainer = document.querySelector('.two-sided-container');
 
@@ -86,7 +85,10 @@
         fin.desktop.System.getConfig(function(config) {
             //generate a new app.json file
             var startConfig = generateAppJsonObject(appName, appUrl, config);
+            //flip to the next page.
             flipDisplay();
+
+            //wait a bit before displaying the download.
             setTimeout(function() {
                 saveObjectAsJson(startConfig, "app.json");
             }, 700);
