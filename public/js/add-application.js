@@ -54,6 +54,7 @@
             desktop_controller_url: config.desktop_controller_url,
             default_icon: config.default_icon,
             startup_app: {
+                autoShow: true,
                 name: appName,
                 url: url,
                 uuid: appName,
