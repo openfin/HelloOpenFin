@@ -5,7 +5,6 @@
         //start the cpu window in a hidded state
         cpuWindow,
         addApplicationWindow,
-        aboutWindow,
         flipContainer,
         githubLink,
         openFinApiLink,
@@ -31,13 +30,6 @@
             addApplicationWindow = windowFactory.create(utils.extend(defaultWindowConfig, {
                 name: 'addApplicationWindow',
                 url: 'views/addapplication.html'
-            }));
-
-            aboutWindow = windowFactory.create(utils.extend(defaultWindowConfig, {
-                name: 'aboutWindow',
-                url: 'views/about.html'
-            }, function() {
-                animations.showWindow(aboutWindow, [mainWindow, addApplicationWindow, cpuWindow]);
             }));
             //register the event handlers.
             setEventHandlers();
@@ -88,22 +80,21 @@
 
         //Cpu information button.
         cpuInfoButton.addEventListener('click', function() {
-            animations.showWindow(cpuWindow, [mainWindow, addApplicationWindow, aboutWindow]);
+            animations.showWindow(cpuWindow, [mainWindow, addApplicationWindow]);
         });
 
         //Add application button.
         addApplicationButton.addEventListener('click', function() {
-            animations.showWindow(addApplicationWindow, [mainWindow, cpuWindow, aboutWindow]);
+            animations.showWindow(addApplicationWindow, [mainWindow, cpuWindow]);
         });
 
         aboutButton.addEventListener('click', function() {
-            // animations.showWindow(aboutWindow, [mainWindow, addApplicationWindow, cpuWindow]);
             flipDisplay();
         });
 
         //Arrange windows in the desktop.
         arrangeWindowsButton.addEventListener('click', function() {
-            animations.animateWindows([mainWindow, cpuWindow, addApplicationWindow, aboutWindow]);
+            animations.animateWindows([mainWindow, cpuWindow, addApplicationWindow]);
         });
 
         //github link event handler
