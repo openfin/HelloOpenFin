@@ -16,6 +16,6 @@ Documentation for the OpenFin Runtime API can be found [here](http://openfin.co/
 
 ## Hello World Setup:
 
-Step by step instructions can be found [here](http://openfin.co/developers.html?url=developers/getting-started/first-app.html)
+Step by step instructions can be found [here](http://openfin.co/developers.html?url=developers/getting-started/running-hello.html)
 
 
