@@ -1,0 +1,22 @@
+{
+  "name": "HelloOpenFin",
+  "version": "0.0.0",
+  "homepage": "https://github.com/rdepena/HelloOpenFin",
+  "authors": [
+    "Ricardo de pena <ricardo.depena@gmail.com>"
+  ],
+  "description": "OpenFin Hello world",
+  "main": "grunt serve",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "modernizr": "~2.8.3",
+    "d3": "~3.4.12"
+  }
+}

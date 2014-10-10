@@ -283,8 +283,16 @@ polyline{
 .face.back {
     -webkit-transform: rotateY(180deg);
 }
-
 .two-sided-container.flip {
     -webkit-transform: rotateY(180deg);
 }
 
+.no-csstransforms3d .face.back {
+    visibility: hidden;
+}
+.no-csstransforms3d .flip .face {
+    visibility: hidden;
+}
+.no-csstransforms3d .flip .face.back {
+    visibility: visible;
+}

@@ -6,7 +6,8 @@ module.exports = function(grunt) {
         'public/**/*.js',
         'package.json',
         'server.js',
-        'app.json'
+        'app.json',
+        '!public/bower_components/**/*.*'
     ];
 
     grunt.initConfig({
