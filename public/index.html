@@ -8,6 +8,7 @@
     </head>
     <body >
         <div class="container of-draggable">
+            <div id="about-app" class="btn top-btn about">?</div>
             <div id="minimize-window" class="btn top-btn minimize">
                 <div class="minimize-bar"></div>
             </div>
@@ -18,21 +19,42 @@
                     (Hello OpenFin)
                 </span>
             </div>
-            <div class="chart-container">
-                <div id="chart">
+            <div class="two-sided-container">
+                <div class="face front">
+                    <div class="chart-container">
+                        <div id="chart">
+                        </div>
+                    </div>
+                </div>
+                <div class="face back">
+                    <p class="explanation">
+                        This demo application showcases some of the features of the OpenFin Runtime. You can find Production ready applications built on OpenFin's Runtime in our <a id="appGalleryLink" href="#">App Gallery</a>
+                    </p>
+                    <p class="explanation">
+                        This is an HTML5/Javascript application that leverages the OpenFin API to access native functionality.
+                    </p>
+                    <p class="explanation">
+                        The code is open source and can be found on <a id="githubLink" href="#">github.</a> and a walkthrough can be found on <a id="openFinApiLink" href="#">the OpenFin API Docs</a>
+                    </p>
+                    <div class="copyright-info">
+                        © 2014 OpenFin All Rights Reserved.
+                    </div>
                 </div>
             </div>
             <div class="menu-buttons">
-                <button class="btn" id="desktop-notification">Send Notification</button>
+                <button class="btn" id="desktop-notification">Notification</button>
                 <button class="btn" id="cpu-info">Cpu Info</button>
                 <button class="btn" id="arrange-windows">Animate</button>
+                <button class="btn" id="add-app">New App</button>
             </div>
         </div>
-        <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-        <script src="js/utils.js"></script>
-        <script src="js/index.js"></script>
-        <script src="js/chart.circle.js"></script>
-        <script src="js/window-factory.js"></script>
+        <script src="/bower_components/modernizr/modernizr.js"></script>
+        <script src="/bower_components/d3/d3.js"></script>
+        <script src="/js/utils.js"></script>
+        <script src="/js/index.js"></script>
+        <script src="/js/chart-circle.js"></script>
+        <script src="/js/window-factory.js"></script>
+        <script src="/js/animations.js"></script>
         <script src="https://developer.openfin.co/release/adapter/js/unstable/openfin-desktop-js-adapter-v2.0.6.0.js"></script>
     </body>
 </html>

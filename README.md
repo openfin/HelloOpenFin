@@ -1,6 +1,6 @@
 OpenFin Hello World
 ============
-
+[![Build Status](https://travis-ci.org/openfin/HelloOpenFin.svg?branch=master)](https://travis-ci.org/openfin/HelloOpenFin)
 
 This is OpenFin's version of hello world, showcasing just a few features of the [OpenFin](http://openfin.co/) Runtime.
 
@@ -16,6 +16,6 @@ Documentation for the OpenFin Runtime API can be found [here](http://openfin.co/
 
 ## Hello World Setup:
 
-Step by step instructions can be found [here](http://openfin.co/developers.html?url=developers/getting-started/first-app.html)
+Step by step instructions can be found [here](http://openfin.co/developers.html?url=developers/getting-started/running-hello.html)
 
 

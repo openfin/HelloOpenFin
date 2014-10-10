@@ -1,9 +1,9 @@
-var WindowFactory = WindowFactory || {},
+var windowFactory = windowFactory || {},
     utils = utils || {};
 (function() {
     'use strict';
 
-    WindowFactory.create = function(customConfig, callback) {
+    windowFactory.create = function(customConfig, callback) {
         var config = {
             "name": "ChildWindow",
             "defaultWidth": 525,
@@ -11,13 +11,14 @@ var WindowFactory = WindowFactory || {},
             "maxWidth": 525,
             "maxHeight": 395,
             "autoShow": false,
+            "maximizable": false,
+            "resizable": false,
+            "frame": false,
             "url": 'about:blank',
             "cornerRounding": {
                 "width": 5,
                 "height": 5
-            },
-            "frame": false,
-            "resizable": false
+            }
         };
 
         customConfig = customConfig || {};

@@ -1,7 +1,5 @@
 var cpuChart = cpuChart || {};
 
-console.log('this is my cpuChart obj', cpuChart);
-
 document.addEventListener('DOMContentLoaded', function() {
 
     //OpenFin is ready.
@@ -10,7 +8,8 @@ document.addEventListener('DOMContentLoaded', function() {
         var closeButton = document.getElementById('close-app'),
             minimizeButton = document.getElementById('minimize-window'),
             draggableArea = document.querySelector('.container'),
-            mainWindow = fin.desktop.Window.getCurrent();
+            mainWindow = fin.desktop.Window.getCurrent(),
+            runtimeVersionNumberContainer = document.querySelector('#runtime-version-number');
 
         /* kick off a d3 chart that displays cpu usage data */
         cpuChart.initChart();
@@ -25,22 +24,11 @@ document.addEventListener('DOMContentLoaded', function() {
             mainWindow.minimize();
         });
 
-        //set the drag animations.
-        mainWindow.defineDraggableArea(draggableArea, function(data) {
-            mainWindow.animate({
-                opacity: utils.transparentOpacityAnimation,
-            }, {
-                interrupt: false
-            });
-        }, function(data) {
-            mainWindow.animate({
-                opacity: utils.solidOpacityAnimation
-            }, {
-                interrupt: false
-            });
-        }, function(err) {
-            console.log(err);
+        fin.desktop.System.getVersion(function(version) {
+            runtimeVersionNumberContainer.innerText = version;
         });
 
+        //set the drag animations.
+        animations.defineDraggableArea(mainWindow, draggableArea);
     });
 });

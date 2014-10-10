@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Hello OpenFin Add Application</title>
+        <meta name="application form" content="Add Application">
+        <link rel="stylesheet" href="../css/main.css">
+    </head>
+    <body >
+        <div class="container of-draggable">
+            <div id="minimize-window" class="btn top-btn minimize">
+                <div class="minimize-bar"></div>
+            </div>
+            <div id="close-app" class="btn top-btn close">x</div>
+            <div class="top-description">
+                <img class="logo" src="../img/logo.png" alt="openfin logo">
+                <span class="name-fin">
+                    Add an application
+                </span>
+            </div>
+            <div class="two-sided-container">
+                <div class="face front">
+                    <p class="explanation">
+                        We will now go through the steps of creating an OpenFin launcher for a web application of your choosing,
+                        the first step is to provide a name and the url,
+                        this process will generate an app.json file that will be used to create a launcher and configure the OpenFin Runtime.
+                    </p>
+                    <form role="form" id="newAppForm">
+                        <div class="center-form">
+                            <label for="appName">Name</label>
+                            <input type="text" required class="text-box" placeholder="New app name" id="appName"  />
+                            <label for="startUrl">URL</label>
+                            <input type="url" required class="text-box" placeholder="http://localhost:5000" id="startURL" />
+                        </div>
+                        <div class="menu-buttons">
+                            <button class="btn" id="generate-application-json">Create app.json</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="face back">
+                    <p class="explanation">
+                       You are now ready to create an installer, follow <a class="deployappLink" href="#">these steps </a> to create a shortcut.
+                    </p>
+                    <p class="explanation">
+                        The app.json file will be used on application start to determine the runtime settings, it can also be used to generate installers you can distribute.
+                    </p>
+                    <p class="explanation">
+                        We recommend that you read more about the app.json file, the OpenFin runtime version manager (RVM) and deployment strategies on <a class="deployappLink" href="#">our documentation site.</a>
+                    </p>
+                    <p class="explanation">
+                        Use the back button to flip back to the add application form
+                    </p>
+                    <div class="menu-buttons">
+                        <button class="btn" id="back-button">Back</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="/bower_components/modernizr/modernizr.js"></script>
+        <script src="/js/utils.js"></script>
+        <script src="/js/add-application.js"></script>
+        <script src="/js/animations.js"></script>
+        <script src="https://developer.openfin.co/release/adapter/js/unstable/openfin-desktop-js-adapter-v2.0.6.0.js"></script>
+    </body>
+</html>

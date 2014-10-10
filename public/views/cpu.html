@@ -2,12 +2,12 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>Hello OpenFin CPU Info</title>
     <meta name="description" content="OpenFin Hello World">
     <link rel="stylesheet" href="../css/main.css">
 </head>
-<body class="of-draggable">
-    <div class="container of-draggable">
+<body class="">
+    <div class="container ">
         <div id="minimize-window" class="btn top-btn cpu-minimize">
             <div class="minimize-bar"></div>
         </div>
@@ -22,11 +22,15 @@
             <div id="chart">
             </div>
         </div>
+        <div class="copyright-info">
+            OpenFin Runtime Version: <span id="runtime-version-number"></span>
+        </div>
     </div>
-    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script src="/bower_components/d3/d3.js" charset="utf-8"></script>
     <script src="https://developer.openfin.co/release/adapter/js/unstable/openfin-desktop-js-adapter-v2.0.6.0.js"></script>
     <script src="/js/utils.js"></script>
-    <script src="/js/cpu.charts.js"></script>
+    <script src="/js/cpu-charts.js"></script>
     <script src="/js/cpu-window.js"></script>
+    <script src="/js/animations.js"></script>
 </body>
 </html>

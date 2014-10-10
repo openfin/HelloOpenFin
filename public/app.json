@@ -1,0 +1,36 @@
+{
+  "env": "2.0.7.0",
+  "desktop_core_url": "https://demoappdirectory.openf.in/desktop/desktopcore/2.0.7/index.html",
+  "desktop_controller_url": "https://demoappdirectory.openf.in/desktop/desktopcontroller/2.0.7/index.html",
+  "devtools_port" : 9090,
+  "startup_app": {
+    "name": "Hello Open Fin",
+    "url": "http:/localhost:5000/index.html",
+    "uuid": "OpenFinHelloWorld",
+    "applicationIcon": "http://localhost:5000/img/openfin.ico",
+    "autoShow": false,
+    "defaultHeight": 525,
+    "defaultWidth": 395,
+    "maxWidth": 395,
+    "maxHeight": 525,
+    "defaultTop": 50,
+    "defaultLeft": 10,
+    "resizable" : false,
+    "maximizable" : false,
+    "frame": false,
+    "cornerRounding" : {
+        "width" : 5,
+        "height" : 5
+    }
+  },
+  "runtime": {
+    "arguments": "",
+    "version": "latest"
+  },
+  "shortcut": {
+    "company": "OpenFin",
+    "description": "Hello OpenFin",
+    "icon": "http://localhost:5000/img/openfin.ico",
+    "name": "Hello OpenFin"
+  }
+}
