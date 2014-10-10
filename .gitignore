@@ -1,2 +1,4 @@
 node_modules
 bower_components
+public/docs
+npm-debug.log
