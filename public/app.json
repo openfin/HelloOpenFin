@@ -1,11 +1,8 @@
 {
-  "env": "2.0.7.0",
-  "desktop_core_url": "https://demoappdirectory.openf.in/desktop/desktopcore/2.0.7/index.html",
-  "desktop_controller_url": "https://demoappdirectory.openf.in/desktop/desktopcontroller/2.0.7/index.html",
   "devtools_port" : 9090,
   "startup_app": {
     "name": "Hello Open Fin",
-    "url": "http:/localhost:5000/index.html",
+    "url": "http://localhost:5000/index.html",
     "uuid": "OpenFinHelloWorld",
     "applicationIcon": "http://localhost:5000/img/openfin.ico",
     "autoShow": false,
@@ -25,7 +22,7 @@
   },
   "runtime": {
     "arguments": "",
-    "version": "latest"
+    "version": "v35"
   },
   "shortcut": {
     "company": "OpenFin",

@@ -16,30 +16,29 @@
             maxHeight: 525,
         };
     document.addEventListener('DOMContentLoaded', function() {
-        //OpenFin is ready.
-        fin.desktop.main(function() {
-            //request the windows.
-            mainWindow = fin.desktop.Window.getCurrent();
-            draggableArea = document.querySelector('.container');
-            //start the cpu window in a hidded state
-            cpuWindow = windowFactory.create({
-                "name": "cpuChild",
-                "url": 'views/cpu.html',
-            });
 
-            addApplicationWindow = windowFactory.create(utils.extend(defaultWindowConfig, {
-                name: 'addApplicationWindow',
-                url: 'views/addapplication.html'
-            }));
-            //register the event handlers.
-            setEventHandlers();
-
-            //set the drag animations.
-            animations.defineDraggableArea(mainWindow, draggableArea);
-
-            //show the main window now that we are ready.
-            mainWindow.show();
+        //request the windows.
+        mainWindow = fin.desktop.Window.getCurrent();
+        draggableArea = document.querySelector('.container');
+        //start the cpu window in a hidded state
+        cpuWindow = windowFactory.create({
+            "name": "cpuChild",
+            "url": 'views/cpu.html',
         });
+
+        addApplicationWindow = windowFactory.create(utils.extend(defaultWindowConfig, {
+            name: 'addApplicationWindow',
+            url: 'views/addapplication.html'
+        }));
+        //register the event handlers.
+        setEventHandlers();
+
+        //set the drag animations.
+        animations.defineDraggableArea(mainWindow, draggableArea);
+
+        //show the main window now that we are ready.
+        mainWindow.show();
+
     });
 
     var flipDisplay = function() {
