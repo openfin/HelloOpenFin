@@ -122,65 +122,65 @@ var cpuChart = (function() {
 
     function refreshChart(data) {
 
-        var xAxis,
-            layers,
-            dataMax,
-            minDomain;
+            var xAxis,
+                layers,
+                dataMax,
+                minDomain;
 
-        // here we are clearing the old axis and view data
-        // this should really be handled on an update
-        d3.selectAll('.axis').remove();
-        svg.selectAll(".layer").remove();
+            // here we are clearing the old axis and view data
+            // this should really be handled on an update
+            d3.selectAll('.axis').remove();
+            svg.selectAll(".layer").remove();
 
-        xAxis = d3.svg.axis()
-            .scale(x)
-            .orient("bottom")
-            .ticks(d3.time.seconds, 5);
+            xAxis = d3.svg.axis()
+                .scale(x)
+                .orient("bottom")
+                .ticks(d3.time.seconds, 5);
 
-        data.forEach(function(d) {
-            //we are already passing a date obj (thats what it wants)
-            //d.date = format.parse(d.date);
+            data.forEach(function(d) {
+                //we are already passing a date obj (thats what it wants)
+                //d.date = format.parse(d.date);
 
-            d.value = +d.value;
-        });
-
-        layers = stack(nest.entries(data));
-
-        x.domain(d3.extent(data, function(d) {
-            return d.date;
-        }));
-        //y.domain([0, d3.max(data, function(d) { return d.y0 + d.y; })]);
-
-        //lets have the domain of y extend at least to 10
-        dataMax = d3.max(data, function(d) {
-            return d.y0 + d.y;
-        });
-        minDomain = (dataMax + 8) < 10 ? 10 : dataMax + 8;
-        y.domain([0, minDomain]);
-
-        svg.selectAll(".layer")
-            .data(layers)
-            .enter().append("path")
-            .attr("class", "layer")
-            .attr("d", function(d) {
-                return area(d.values);
-            })
-            .style("fill", function(d, i) {
-                return z(i);
+                d.value = +d.value;
             });
 
-        svg.append("g")
-            .attr("class", "x axis")
-            .attr("transform", "translate(0," + (height + 3) + ")")
-            .call(xAxis);
+            layers = stack(nest.entries(data));
 
-        svg.append("g")
-            .attr("class", "y axis")
-            .call(yAxis);
+            x.domain(d3.extent(data, function(d) {
+                return d.date;
+            }));
+            //y.domain([0, d3.max(data, function(d) { return d.y0 + d.y; })]);
 
-        renderLegend(data, svg);
+            //lets have the domain of y extend at least to 10
+            dataMax = d3.max(data, function(d) {
+                return d.y0 + d.y;
+            });
+            minDomain = (dataMax + 8) < 10 ? 10 : dataMax + 8;
+            y.domain([0, minDomain]);
 
-    } //end refresh chart
+            svg.selectAll(".layer")
+                .data(layers)
+                .enter().append("path")
+                .attr("class", "layer")
+                .attr("d", function(d) {
+                    return area(d.values);
+                })
+                .style("fill", function(d, i) {
+                    return z(i);
+                });
+
+            svg.append("g")
+                .attr("class", "x axis")
+                .attr("transform", "translate(0," + (height + 3) + ")")
+                .call(xAxis);
+
+            svg.append("g")
+                .attr("class", "y axis")
+                .call(yAxis);
+
+            renderLegend(data, svg);
+
+        } //end refresh chart
 
 
     function reloadProcInfo(procList, refreshChart) {

@@ -10,17 +10,17 @@
         flipContainer = document.querySelector('.two-sided-container');
 
     document.addEventListener('DOMContentLoaded', function() {
-        fin.desktop.main(function() {
-            //request the window
-            var mainWindow = fin.desktop.Window.getCurrent(),
-                draggableArea = document.querySelector('.container');
 
-            //set event emiters.
-            setEventEmmiters(mainWindow);
+        //request the window
+        var mainWindow = fin.desktop.Window.getCurrent(),
+            draggableArea = document.querySelector('.container');
 
-            //set the drag animations.
-            animations.defineDraggableArea(mainWindow, draggableArea);
-        });
+        //set event emiters.
+        setEventEmmiters(mainWindow);
+
+        //set the drag animations.
+        animations.defineDraggableArea(mainWindow, draggableArea);
+
     });
 
     //set event handlers for the different buttons.
@@ -49,9 +49,6 @@
 
     var generateAppJsonObject = function(appName, url, config) {
         return {
-            env: config.env,
-            desktop_core_url: config.desktop_core_url,
-            desktop_controller_url: config.desktop_controller_url,
             default_icon: config.default_icon,
             startup_app: {
                 autoShow: true,
