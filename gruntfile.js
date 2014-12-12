@@ -81,13 +81,17 @@ module.exports = function(grunt) {
             },
             livereload: {
                 options: {
-                    open: true,
+                    open: false,
                     base: [
                         'public'
                     ]
                 }
             }
-
+        },
+        openfin: {
+            options: {
+                configPath: 'http://localhost:5000/app.json'
+            }
         }
     });
 
@@ -111,10 +115,11 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-jsbeautifier');
     grunt.loadNpmTasks('grunt-contrib-connect');
+    grunt.loadNpmTasks('grunt-openfin');
 
     grunt.registerTask('default', ['jshint', 'jsbeautifier']);
     grunt.registerTask('test', ['jshint', 'jsbeautifier']);
-    grunt.registerTask('serve', ['test', 'config-builder', 'connect:livereload', 'watch']);
+    grunt.registerTask('serve', ['test', 'config-builder', 'connect:livereload', 'openfin', 'watch']);
     grunt.registerTask('build', ['test', 'config-builder']);
 
 };
