@@ -10,17 +10,18 @@
         flipContainer = document.querySelector('.two-sided-container');
 
     document.addEventListener('DOMContentLoaded', function() {
+        //OpenFin is ready
+        fin.desktop.main(function() {
+            //request the window
+            var mainWindow = fin.desktop.Window.getCurrent(),
+                draggableArea = document.querySelector('.container');
 
-        //request the window
-        var mainWindow = fin.desktop.Window.getCurrent(),
-            draggableArea = document.querySelector('.container');
+            //set event emiters.
+            setEventEmmiters(mainWindow);
 
-        //set event emiters.
-        setEventEmmiters(mainWindow);
-
-        //set the drag animations.
-        animations.defineDraggableArea(mainWindow, draggableArea);
-
+            //set the drag animations.
+            animations.defineDraggableArea(mainWindow, draggableArea);
+        });
     });
 
     //set event handlers for the different buttons.

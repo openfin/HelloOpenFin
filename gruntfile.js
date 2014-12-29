@@ -1,15 +1,16 @@
 /* jshint node: true*/
 'use strict';
 module.exports = function(grunt) {
-    var jsFiles = [
-        'gruntfile.js',
-        'public/**/*.js',
-        'package.json',
-        'server.js',
-        'app.json',
-        'src/*.js',
-        '!public/bower_components/**/*.*'
-    ];
+    var target = grunt.option('target') || 'http://localhost:5000',
+        jsFiles = [
+            'gruntfile.js',
+            'public/**/*.js',
+            'package.json',
+            'server.js',
+            'app.json',
+            'src/*.js',
+            '!public/bower_components/**/*.*'
+        ];
 
     grunt.initConfig({
         watch: {
@@ -90,24 +91,33 @@ module.exports = function(grunt) {
         },
         openfin: {
             options: {
-                configPath: 'http://localhost:5000/app.json'
+                open: true,
+                configPath: target + '/app.json',
+                config: {
+                    create: true,
+                    filePath: 'public/app.json',
+                    options: {
+                        startup_app: {
+                            name: 'Hello OpenFin',
+                            url: target + '/index.html',
+                            applicationIcon: target + '/img/openfin.ico',
+                        },
+                        shortcut: {
+                            icon: target + '/img/openfin.ico'
+                        }
+                    }
+                }
+            },
+            serve: {
+                options: {
+                    open: true
+                }
+            },
+            build: {
+                options: {
+                    open: false
+                }
             }
-        }
-    });
-
-    //modifies the app.config to point to a specific server
-    grunt.registerTask('config-builder', 'open fin launcher', function() {
-        var configBuilder = require('./src/configBuilder'),
-            target = grunt.option('target'),
-            //this task is asynchronous.
-            done = this.async();
-
-        if (target) {
-            //request the config to be updated with a given target and pass the grunt done function.
-            configBuilder.build(target, done);
-        } else {
-            console.log('no target specific, app.json running defaults');
-            done();
         }
     });
 
@@ -119,7 +129,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('default', ['jshint', 'jsbeautifier']);
     grunt.registerTask('test', ['jshint', 'jsbeautifier']);
-    grunt.registerTask('serve', ['test', 'config-builder', 'connect:livereload', 'openfin', 'watch']);
-    grunt.registerTask('build', ['test', 'config-builder']);
+    grunt.registerTask('serve', ['test', 'connect:livereload', 'openfin:serve', 'watch']);
+    grunt.registerTask('build', ['test', 'openfin:build']);
 
 };
