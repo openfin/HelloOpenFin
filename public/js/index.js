@@ -34,6 +34,9 @@
             //register the event handlers.
             setEventHandlers();
 
+            //start the inter app buss loop
+            startInterApplicationBusLoop();
+
             //set the drag animations.
             animations.defineDraggableArea(mainWindow, draggableArea);
 
@@ -42,6 +45,15 @@
         });
 
     });
+
+    var startInterApplicationBusLoop = function() {
+        setInterval(function() {
+            fin.desktop.InterApplicationBus.publish('hello:openfin:subscription', {
+                message: 'Greetigs from Hello OpenFin',
+                timeStamp: Date.now()
+            });
+        }, 5000);
+    };
 
     var flipDisplay = function() {
         flipContainer.classList.toggle("flip");
@@ -112,5 +124,14 @@
         appGalleryLink.addEventListener('click', function() {
             fin.desktop.System.openUrlWithBrowser('http://openfin.co/app-gallery.html');
         });
+
+        //Subscribe to the InterApplicationBus
+        fin.desktop.InterApplicationBus.subscribe("*", "hello:openfin:notification",
+            function(bussObject, uuid) {
+                var notification = new fin.desktop.Notification({
+                    url: 'views/notification.html',
+                    message: bussObject.message
+                });
+            });
     };
 }());
