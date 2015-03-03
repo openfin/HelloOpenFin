@@ -29,7 +29,7 @@
 
             addApplicationWindow = windowFactory.create(utils.extend(defaultWindowConfig, {
                 name: 'addApplicationWindow',
-                url: 'views/addapplication.html'
+                url: 'views/interappbus.html'
             }));
             //register the event handlers.
             setEventHandlers();
@@ -48,7 +48,7 @@
 
     var startInterApplicationBusLoop = function() {
         setInterval(function() {
-            fin.desktop.InterApplicationBus.publish('hello:openfin:subscription', {
+            fin.desktop.InterApplicationBus.publish('hello:of:sub', {
                 message: 'Greetigs from Hello OpenFin',
                 timeStamp: Date.now()
             });
@@ -66,7 +66,7 @@
             closeButton = document.getElementById('close-app'),
             arrangeWindowsButton = document.getElementById('arrange-windows'),
             minimizeButton = document.getElementById('minimize-window'),
-            addApplicationButton = document.getElementById('add-app'),
+            interAppButton = document.getElementById('inter-app'),
             aboutButton = document.getElementById('about-app');
         flipContainer = document.querySelector('.two-sided-container');
         githubLink = document.getElementById('githubLink');
@@ -97,7 +97,7 @@
         });
 
         //Add application button.
-        addApplicationButton.addEventListener('click', function() {
+        interAppButton.addEventListener('click', function() {
             animations.showWindow(addApplicationWindow, [mainWindow, cpuWindow]);
         });
 
@@ -126,7 +126,7 @@
         });
 
         //Subscribe to the InterApplicationBus
-        fin.desktop.InterApplicationBus.subscribe("*", "hello:openfin:notification",
+        fin.desktop.InterApplicationBus.subscribe('*', 'hello:of:notification',
             function(bussObject, uuid) {
                 var notification = new fin.desktop.Notification({
                     url: 'views/notification.html',

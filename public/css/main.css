@@ -263,7 +263,9 @@ polyline{
   }
 
 .menu-buttons {
-
+    position: absolute;
+    bottom: 5%;
+    left: 5%;
 }
 /**** Styles for the add application ****/
 .two-sided-container {
@@ -279,6 +281,9 @@ polyline{
     top: 0;
     left: 0;
     width: 100%;
+    display: inline-block;
+    min-height: 440px;
+    z-index: 1;
 }
 .face.back {
     -webkit-transform: rotateY(180deg);
@@ -287,6 +292,13 @@ polyline{
     -webkit-transform: rotateY(180deg);
 }
 
+.face.inter-app {
+    min-height: 440px;
+}
+.face.inter-app .menu-buttons {
+    left:25%;
+    bottom: 6%;
+}
 .no-csstransforms3d .face.back {
     visibility: hidden;
 }
