@@ -4,7 +4,7 @@
         draggableArea,
         //start the cpu window in a hidded state
         cpuWindow,
-        addApplicationWindow,
+        interAppWindow,
         flipContainer,
         githubLink,
         openFinApiLink,
@@ -27,8 +27,8 @@
                 "url": 'views/cpu.html',
             });
 
-            addApplicationWindow = windowFactory.create(utils.extend(defaultWindowConfig, {
-                name: 'addApplicationWindow',
+            interAppWindow = windowFactory.create(utils.extend(defaultWindowConfig, {
+                name: 'interAppWindow',
                 url: 'views/interappbus.html'
             }));
             //register the event handlers.
@@ -93,12 +93,12 @@
 
         //Cpu information button.
         cpuInfoButton.addEventListener('click', function() {
-            animations.showWindow(cpuWindow, [mainWindow, addApplicationWindow]);
+            animations.showWindow(cpuWindow, [mainWindow, interAppWindow]);
         });
 
         //Add application button.
         interAppButton.addEventListener('click', function() {
-            animations.showWindow(addApplicationWindow, [mainWindow, cpuWindow]);
+            animations.showWindow(interAppWindow, [mainWindow, cpuWindow]);
         });
 
         aboutButton.addEventListener('click', function() {
@@ -107,7 +107,7 @@
 
         //Arrange windows in the desktop.
         arrangeWindowsButton.addEventListener('click', function() {
-            animations.animateWindows([mainWindow, cpuWindow, addApplicationWindow]);
+            animations.animateWindows([mainWindow, cpuWindow, interAppWindow]);
         });
 
         //github link event handler

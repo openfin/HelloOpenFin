@@ -124,9 +124,15 @@ polyline{
 }
 
 .chart-container {
-    max-height: 400px;
-    margin: 0 0 -30px 10px;
+    height: 100%;
+    width: 100%;
+    min-height: 400px;
 }
+.chart-container svg {
+    padding-bottom: 100%;
+    padding-right: 20%;
+}
+
 .btn {
     padding: 5px;
     font-size: 14px;
