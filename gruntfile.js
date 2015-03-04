@@ -104,6 +104,9 @@ module.exports = function(grunt) {
                         },
                         shortcut: {
                             icon: target + '/img/openfin.ico'
+                        },
+                        runtime: {
+                            version: "beta"
                         }
                     }
                 }

@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Hello OpenFin Inter Application Bus</title>
+        <meta name="application form" content="Inter Application Bus">
+        <link rel="stylesheet" href="../css/main.css">
+    </head>
+    <body >
+        <div class="container of-draggable">
+            <div id="minimize-window" class="btn top-btn minimize">
+                <div class="minimize-bar"></div>
+            </div>
+            <div id="close-app" class="btn top-btn close">x</div>
+            <div class="top-description">
+                <img class="logo" src="../img/logo.png" alt="openfin logo">
+                <span class="name-fin">
+                    Inter Application Bus Playground
+                </span>
+            </div>
+            <div class="two-sided-container">
+                <div class="face front inter-app">
+                    <p class="explanation">
+                        You can comunicate with other applications by publishing and subscribing on our Inter Application Bus.
+                    </p>
+                    <p class="explanation">
+                        Subscribe to the <span class="name-fin">hello:of:sub</span> topic, Hello OpenFin will publish to it every 5 seconds.
+                    </p>
+                    <p class="explanation">
+                        Publish to the <span class="name-fin">hello:of:notification</span> topic and see Hello OpenFin react to the message.
+                    </p>
+                    <p class="explanation">
+                        Or Send Arbitrary messages over the bus:
+                    </p>
+                    <br />
+                    <br />
+                    <div class="menu-buttons">
+                        <button class="btn" id="switch-to-message-form">Bus Message Tool</button>
+                    </div>
+                </div>
+                <div class="face back inter-app">
+                    <p class="explanation">
+                       You can publish to the Inter Application Bus
+                    </p>
+                    <form role="form" id="newAppForm">
+                        <div class="center-form">
+                            <label for="topic">Topic</label>
+                            <input type="text" required class="text-box" placeholder="hello:of:notification" id="topic"  />
+                            <label for="message">Message</label>
+                            <input type="url" required class="text-box" placeholder="Hello World!" id="message" />
+                        </div>
+                    </form>
+                    <div class="menu-buttons">
+                        <button class="btn" id="send-message">Send Message</button>
+                        <button class="btn" id="back-button">Back</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="../bower_components/modernizr/modernizr.js"></script>
+        <script src="../js/utils.js"></script>
+        <script src="../js/inter-application-bus.js"></script>
+        <script src="../js/animations.js"></script>
+    </body>
+</html>

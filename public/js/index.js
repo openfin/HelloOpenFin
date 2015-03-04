@@ -4,7 +4,7 @@
         draggableArea,
         //start the cpu window in a hidded state
         cpuWindow,
-        addApplicationWindow,
+        interAppWindow,
         flipContainer,
         githubLink,
         openFinApiLink,
@@ -27,12 +27,15 @@
                 "url": 'views/cpu.html',
             });
 
-            addApplicationWindow = windowFactory.create(utils.extend(defaultWindowConfig, {
-                name: 'addApplicationWindow',
-                url: 'views/addapplication.html'
+            interAppWindow = windowFactory.create(utils.extend(defaultWindowConfig, {
+                name: 'interAppWindow',
+                url: 'views/interappbus.html'
             }));
             //register the event handlers.
             setEventHandlers();
+
+            //start the inter app buss loop
+            startInterApplicationBusLoop();
 
             //set the drag animations.
             animations.defineDraggableArea(mainWindow, draggableArea);
@@ -42,6 +45,15 @@
         });
 
     });
+
+    var startInterApplicationBusLoop = function() {
+        setInterval(function() {
+            fin.desktop.InterApplicationBus.publish('hello:of:sub', {
+                message: 'Greetigs from Hello OpenFin',
+                timeStamp: Date.now()
+            });
+        }, 5000);
+    };
 
     var flipDisplay = function() {
         flipContainer.classList.toggle("flip");
@@ -54,7 +66,7 @@
             closeButton = document.getElementById('close-app'),
             arrangeWindowsButton = document.getElementById('arrange-windows'),
             minimizeButton = document.getElementById('minimize-window'),
-            addApplicationButton = document.getElementById('add-app'),
+            interAppButton = document.getElementById('inter-app'),
             aboutButton = document.getElementById('about-app');
         flipContainer = document.querySelector('.two-sided-container');
         githubLink = document.getElementById('githubLink');
@@ -81,12 +93,12 @@
 
         //Cpu information button.
         cpuInfoButton.addEventListener('click', function() {
-            animations.showWindow(cpuWindow, [mainWindow, addApplicationWindow]);
+            animations.showWindow(cpuWindow, [mainWindow, interAppWindow]);
         });
 
         //Add application button.
-        addApplicationButton.addEventListener('click', function() {
-            animations.showWindow(addApplicationWindow, [mainWindow, cpuWindow]);
+        interAppButton.addEventListener('click', function() {
+            animations.showWindow(interAppWindow, [mainWindow, cpuWindow]);
         });
 
         aboutButton.addEventListener('click', function() {
@@ -95,7 +107,7 @@
 
         //Arrange windows in the desktop.
         arrangeWindowsButton.addEventListener('click', function() {
-            animations.animateWindows([mainWindow, cpuWindow, addApplicationWindow]);
+            animations.animateWindows([mainWindow, cpuWindow, interAppWindow]);
         });
 
         //github link event handler
@@ -112,5 +124,14 @@
         appGalleryLink.addEventListener('click', function() {
             fin.desktop.System.openUrlWithBrowser('http://openfin.co/app-gallery.html');
         });
+
+        //Subscribe to the InterApplicationBus
+        fin.desktop.InterApplicationBus.subscribe('*', 'hello:of:notification',
+            function(bussObject, uuid) {
+                var notification = new fin.desktop.Notification({
+                    url: 'views/notification.html',
+                    message: bussObject.message
+                });
+            });
     };
 }());
