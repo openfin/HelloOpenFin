@@ -6,16 +6,16 @@ Hello OpenFin is an HTML5/Javascript application that showcases several features
 
 ## System Requirements:
 
-- [OpenFin Runtime](http://openfin.co/developers.html?url=developers/getting-started/downloading.html)
+- [OpenFin Runtime](https://openfin.co/)
 - [NodeJS](http://nodejs.org/) (For static file hosting, can be replaced)
 
 
 ## Documentation
 
-Documentation for the OpenFin Runtime API can be found [here](http://openfin.co/developers.html?url=developers/api/js/javascript.html)
+Documentation for the OpenFin Runtime API can be found [here](https://openfin.co/developers/javascript-api/)
 
 ## Hello World Setup:
 
-Step by step instructions can be found [here](http://openfin.co/developers.html?url=developers/getting-started/running-hello.html)
+Step by step instructions can be found [here](https://openfin.co/developers/hello-openfin-tour/)
 
 
