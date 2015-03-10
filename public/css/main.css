@@ -124,13 +124,13 @@ polyline{
 }
 
 .chart-container {
-    height: 100%;
+    height: 400px;
     width: 100%;
-    min-height: 400px;
+    padding-left: 7px;
 }
 .chart-container svg {
-    padding-bottom: 100%;
-    padding-right: 20%;
+    height: 100%;
+    width: 100%;
 }
 
 .btn {
