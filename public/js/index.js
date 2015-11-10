@@ -117,12 +117,12 @@
 
         //OpenFin api link event handler
         openFinApiLink.addEventListener('click', function() {
-            fin.desktop.System.openUrlWithBrowser('http://openfin.co/developers.html?url=developers/getting-started/first-look.html');
+            fin.desktop.System.openUrlWithBrowser('https://openfin.co/javascript-api/');
         });
 
         //OpenFin App Gallery link event handler
         appGalleryLink.addEventListener('click', function() {
-            fin.desktop.System.openUrlWithBrowser('http://openfin.co/app-gallery.html');
+            fin.desktop.System.openUrlWithBrowser('https://openfin.co/demos/');
         });
 
         //Subscribe to the InterApplicationBus
