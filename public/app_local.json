@@ -24,7 +24,7 @@
         "arguments": "",
         "version": "beta"
     },
-    "splashScreenImage": "http://demoappdirectory.openf.in/desktop/config/apps/OpenFin/HelloOpenFin/splashscreen/splash_hello.png",
+    "splashScreenImage": "http://localhost:5000/splashscreen/splash_hello.png",
     "shortcut": {
         "company": "OpenFin",
         "description": "Hello OpenFin",
