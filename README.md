@@ -21,7 +21,7 @@ $ npm install
 ```
 
 ## Demo Example
-* Click this OpenFin [Hello OpenFin Installer](https://dl.openfin.co/services/download?fileName=hello-openfin-installer&config=https://demoappdirectory.openf.in/desktop/config/apps/OpenFin/HelloOpenFin/app.json)
+* Click this OpenFin [Hello OpenFin Installer](https://dl.openfin.co/services/download?fileName=hello-openfin-installer&config=https://cdn.openfin.co/demos/hello/app.json)
 * Unzip and run the installer
 * Double click the icon it creates on your desktop
 
