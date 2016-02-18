@@ -2,9 +2,9 @@
     "devtools_port": 9090,
     "startup_app": {
         "name": "Hello OpenFin",
-        "url": "http://localhost:5000/index.html",
+        "url": "https://cdn.openfin.co/demos/hello/index.html",
         "uuid": "OpenFinHelloWorld",
-        "applicationIcon": "http://localhost:5000/img/openfin.ico",
+        "applicationIcon": "https://cdn.openfin.co/demos/hello/img/openfin.ico",
         "autoShow": false,
         "defaultHeight": 525,
         "defaultWidth": 395,
@@ -24,11 +24,11 @@
         "arguments": "",
         "version": "beta"
     },
-    "splashScreenImage": "http://demoappdirectory.openf.in/desktop/config/apps/OpenFin/HelloOpenFin/splashscreen/splash_hello.png",
+    "splashScreenImage": "https://cdn.openfin.co/demos/hello/splashscreen/splash_hello.png",
     "shortcut": {
         "company": "OpenFin",
         "description": "Hello OpenFin",
-        "icon": "http://localhost:5000/img/openfin.ico",
+        "icon": "https://cdn.openfin.co/demos/hello/img/openfin.ico",
         "name": "Hello OpenFin"
     }
 }

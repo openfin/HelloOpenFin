@@ -5,6 +5,7 @@
     "main": "grunt serve",
     "scripts": {
         "test": "grunt test",
+        "deploy" : "bower install && aws s3 cp public/ s3://cdn.openfin.co/demos/hello/ --recursive --cache-control max-age=60",
         "start": "grunt serve",
         "postinstall": "bower install"
     },
