@@ -21,7 +21,7 @@ $ npm install
 ```
 
 ## Demo Example
-* Click this OpenFin [App Launcher Installer](https://dl.openfin.co/services/download?fileName=hello-openfin-installer&config=https://demoappdirectory.openf.in/desktop/config/apps/OpenFin/HelloOpenFin/app.json)
+* Click this OpenFin [Hello OpenFin Installer](https://dl.openfin.co/services/download?fileName=hello-openfin-installer&config=https://demoappdirectory.openf.in/desktop/config/apps/OpenFin/HelloOpenFin/app.json)
 * Unzip and run the installer
 * Double click the icon it creates on your desktop
 
@@ -31,5 +31,5 @@ $ npm install
 * Open a command-line terminal, navigate to the 'HelloOpenFin' directory
 * in the terminal run 'npm install'
 * after all packages have installed run 'grunt serve'
-* Download a locally running version with this link [Local App Launcher Installer](https://dl.openfin.co/services/download?fileName=hello-openfin-local&config=http://localhost:5000/app_local.json)
+* Download a locally running version with this link [Local Hello OpenFin Installer](https://dl.openfin.co/services/download?fileName=hello-openfin-local&config=http://localhost:5000/app_local.json)
 * Unzip and run the installer
