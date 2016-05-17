@@ -12,7 +12,6 @@ Hello OpenFin is an HTML5/Javascript application that showcases several features
 ## Documentation
 
 Documentation for the OpenFin Runtime API can be found [here](https://openfin.co/developers/javascript-api/).
-A guided tour of the code can be found [here](https://openfin.co/developers/hello-openfin-tour/).
 
 ## Install
 
