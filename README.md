@@ -2,7 +2,7 @@ OpenFin Hello World
 ============
 [![Build Status](https://travis-ci.org/openfin/HelloOpenFin.svg?branch=master)](https://travis-ci.org/openfin/HelloOpenFin)
 
-**Hello OpenFin** is an HTML5/Javascript application that showcases several features available in the [OpenFin](http://openfin.co/) Runtime. The **Hello OpenFin** application allows users to create desktop notifications and child windows, and simulate general animations.
+Hello OpenFin is an HTML5/Javascript application that showcases several features available in the [OpenFin](http://openfin.co/) Runtime. The Hello OpenFin application allows users to create desktop notifications and child windows, and simulate general animations.
 
 ## System Requirements
 
