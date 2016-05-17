@@ -29,7 +29,7 @@ $ npm install
 * Make sure you have [node](https://nodejs.org/en/) installed.
 * Clone this repository.
 * Open a command-line terminal and navigate to the **HelloOpenFin** directory.
-* In the terminal, run **npm install**.
-* After all packages have been installed, run **grunt serve**.
+* In the terminal, run `npm install`.
+* After all packages have been installed, run `grunt serve`.
 * Download a locally running version with this [Local Hello OpenFin Installer link](https://dl.openfin.co/services/download?fileName=hello-openfin-local&config=http://localhost:5000/app_local.json).
 * Unzip and run the installer.
