@@ -19,10 +19,15 @@ Documentation for the OpenFin Runtime API can be found [here](https://openfin.co
 $ npm install
 ```
 
-## Demo Example
-* Click this [Hello OpenFin Installer](https://dl.openfin.co/services/download?fileName=hello-openfin-installer&config=https://cdn.openfin.co/demos/hello/app.json).
-* Unzip and run the installer.
-* Double click the icon it creates on your desktop.
+## Demo Installer
+On a Windows machine, you can install Hello OpenFin via this installer:
+[Hello OpenFin Installer](https://dl.openfin.co/services/download?fileName=hello-openfin-installer&config=https://cdn.openfin.co/demos/hello/app.json).
+
+On a Mac or Linux machine, you can install Hello OpenFin via a Terminal command in these 2 steps:
+```
+$ npm install -g openfin-cli 
+$ openfin --launch --config https://demoappdirectory.openf.in/desktop/config/apps/OpenFin/HelloOpenFin/app.json
+```
 
 ## Localhost Example
 * Make sure you have [node](https://nodejs.org/en/) installed.
