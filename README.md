@@ -21,7 +21,7 @@ $ npm install
 
 ## Demo Installer
 On a Windows machine, you can install Hello OpenFin via this installer:
-[Hello OpenFin Installer](https://dl.openfin.co/services/download?fileName=hello-openfin-installer&config=https://cdn.openfin.co/demos/hello/app.json).
+[Hello OpenFin Installer](https://install.openfin.co/download?fileName=hello-openfin-installer&config=https://cdn.openfin.co/demos/hello/app.json).
 
 On a Mac or Linux machine, you can install Hello OpenFin via a Terminal command in these 2 steps:
 ```
@@ -35,5 +35,5 @@ $ openfin --launch --config https://demoappdirectory.openf.in/desktop/config/app
 * Open a command-line terminal and navigate to the **HelloOpenFin** directory.
 * In the terminal, run `npm install`.
 * After all packages have been installed, run `grunt serve`.
-* Download a locally running version with this [Local Hello OpenFin Installer link](https://dl.openfin.co/services/download?fileName=hello-openfin-local&config=http://localhost:5000/app_local.json).
+* Download a locally running version with this [Local Hello OpenFin Installer link](https://install.openfin.co/download?fileName=hello-openfin-local&config=http://localhost:5000/app_local.json).
 * Unzip and run the installer.
